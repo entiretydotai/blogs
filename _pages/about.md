@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About Us
+title: About us
 permalink: /about/
 ---
 
@@ -9,8 +9,8 @@ Entirety.ai is a ML/DL Meetup Community based out of Bengaluru.We are also a par
 In our meetup,we discuss current trend in deep-learning and it's surprisingly effective role in solving real case scenarios. This meetup  aims to educate, inspire, and enable you to rapidly prototype your next  idea using ML and DL models. The strategy will be to focus more on  Hands On experience first, and then, take you deeper into concepts.  Artificial Intelligence and Machine Learning are evolving extremely fast  which makes the concepts invented last year, obsolete this year.  Therefore we will cover mostly the latest concepts used in the  industry. This meetup focuses on "how to build and understand", not just  "how to use".
 
 Find us at:
-**[Meetup](https://www.meetup.com/Entirety-ai-Intuition-to-Implementation/)
-**[Github](https://github.com/entiretydotai)
-**[Gitlab](https://gitlab.com/entirety.ai/meetup-intuition-to-implementation)
-**[Twitter](https://twitter.com/entiretydotai)
+**[Meetup](https://www.meetup.com/Entirety-ai-Intuition-to-Implementation/)**
+**[Github](https://github.com/entiretydotai)**
+**[Gitlab](https://gitlab.com/entirety.ai/meetup-intuition-to-implementation)**
+**[Twitter](https://twitter.com/entiretydotai)**
 
