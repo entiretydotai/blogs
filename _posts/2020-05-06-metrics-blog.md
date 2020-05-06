@@ -346,11 +346,31 @@ $$
 
 ## Precision Recall Curve
 
-https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html#sphx-glr-auto-examples-model-selection-plot-precision-recall-py
+Precision-Recall is a useful measure of success of prediction when the classes are very imbalanced. In information retrieval, precision is a measure of result relevancy, while recall is a measure of how many truly relevant results are returned.
+
+The precision-recall curve shows the tradeoff between precision and recall for different threshold. A high area under the curve represents both high recall and high precision, where high precision relates to a low false positive rate, and high recall relates to a low false negative rate. High scores for both show that the classifier is returning accurate results (high precision), as well as returning a majority of all positive results (high recall).
+
+A system with high recall but low precision returns many results, but most of its predicted labels are incorrect when compared to the training labels. A system with high precision but low recall is just the opposite, returning very few results, but most of its predicted labels are correct when compared to the training labels. An ideal system with high precision and high recall will return many results, with all results labeled correctly.
+
+![](https://scikit-learn.org/stable/_images/sphx_glr_plot_precision_recall_001.png)
+
+
+
+
 
 ## ROC-AUC curve
 
-https://scikit-learn.org/0.15/modules/model_evaluation.html#receiver-operating-characteristic-roc
+A receiver operating characteristic (ROC), or simply ROC curve, is a graphical plot which illustrates the performance of a binary classifier system as its discrimination threshold is varied. It is created by plotting the fraction of true positives out of the positives (TPR = true positive rate) vs. the fraction of false positives out of the negatives (FPR = false positive rate), at various threshold settings. TPR is also known as sensitivity, and FPR is one minus the specificity or true negative rate. 
+
+The top left corner of the plot is the “ideal” point - a false positive rate of zero, and a true positive rate of one. This is not very realistic, but it does mean that a larger area under the curve (AUC) is usually better.
+
+The “steepness” of ROC curves is also important, since it is ideal to maximize the true positive rate while minimizing the false positive rate.
+
+It can also be used for Mutli label classification problem.
+
+![](https://scikit-learn.org/stable/_images/sphx_glr_plot_roc_001.png)
+
+
 
 ## Cohen’s kappa
 
@@ -371,6 +391,8 @@ The Hamming loss is the fraction of labels that are incorrectly predicted.
 Evaluation metrics for multi-label classification performance are inherently different from those used in multi-class (or binary) classification, due to the inherent differences of the classification problem. If T denotes the true set of labels for a given sample, and P the predicted set of labels, then the following metrics can be defined on that sample:
 
 Hamming loss: the fraction of the wrong labels to the total number of labels, i.e. 
+
+
 $$
 hamming\ loss  = {\displaystyle {\frac {1}{|N|\cdot |L|}}\sum _{i=1}^{|N|}\sum _{j=1}^{|L|}\operatorname {xor} (y_{i,j},z_{i,j})},\ where\ {\displaystyle y_{i,j}}\ y_{i,j}\ is\ the\ target\ and\ {\displaystyle z_{i,j}} z_{{i,j}}
 $$
@@ -391,6 +413,7 @@ Matthews Correlation Coefficient is the answer It is a more reliable statistical
 It computes correlation coefficient between the true class and the predicted class the higher the correlation coefficient the better the model is at prediction.
 
 The MCC is in essence a correlation coefficient value between -1 and +1. A coefficient of +1 represents a perfect prediction, 0 an average random prediction and -1 an inverse prediction.  The statistic is also known as the [phi coefficient](https://en.wikipedia.org/wiki/Phi_coefficient).
+
 $$
 MCC = \frac{TP \times TN - FP \times FN }{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
 $$
@@ -403,9 +426,16 @@ If there is no False prediction, then the model has +1 as a correlation coeffici
 
 ## Average Precision Score
 
-https://makarandtapaswi.wordpress.com/2012/07/02/intuition-behind-average-precision-and-map/
+AP summarizes a precision-recall curve as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight:
+$$
+AP = \sum_n{(R_n-R_{n-1}) P_n}
+$$
+where Pn and Rn denotes the nth threshold. 
 
-https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html#sklearn.metrics.average_precision_score
+This metric is also used in Object Detection.
+
+		1. [Intution Behind Average Precision](https://makarandtapaswi.wordpress.com/2012/07/02/intuition-behind-average-precision-and-map/)
+  		2. [Wikipedia Average Precision](https://en.wikipedia.org/w/index.php?title=Information_retrieval&oldid=793358396#Average_precision)
 
 
 
@@ -457,3 +487,5 @@ For a perfect model, this will be 100%. So, the higher the  concordance, the bet
 4. https://datascience.stackexchange.com/questions/15989/micro-average-vs-macro-average-performance-in-a-multiclass-classification-settin
 5. https://scikit-learn.org/0.22/modules/model_evaluation.html#classification-metrics
 6.  https://www.quora.com/How-do-I-interpret-concordance-in-Logistic-Regression#
+7.  https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
+8.  https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html#sphx-glr-auto-examples-model-selection-plot-precision-recall-py
