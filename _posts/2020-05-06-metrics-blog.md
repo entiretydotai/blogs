@@ -394,7 +394,7 @@ Hamming loss: the fraction of the wrong labels to the total number of labels, i.
 
 
 $$
-hamming\ loss  = {\displaystyle {\frac {1}{|N|\cdot |L|}}\sum _{i=1}^{|N|}\sum _{j=1}^{|L|}\operatorname {xor} (y_{i,j},z_{i,j})},\ where\ {\displaystyle y_{i,j}}\ y_{i,j}\ is\ the\ target\ and\ {\displaystyle z_{i,j}} z_{{i,j}}
+hamming\ loss  = {\frac {1}{|N|\ . |L|}}\sum _{i=1}^{|N|}\sum _{j=1}^{|L|}xor (y_{i,j},z_{i,j}),\ where\ { y_{i,j}}\ y_{i,j}\ is\ the\ target\ and\ {z_{i,j}}\ z_{{i,j}}
 $$
 
 
@@ -434,8 +434,8 @@ where Pn and Rn denotes the nth threshold.
 
 This metric is also used in Object Detection.
 
-		1. [Intution Behind Average Precision](https://makarandtapaswi.wordpress.com/2012/07/02/intuition-behind-average-precision-and-map/)
-  		2. [Wikipedia Average Precision](https://en.wikipedia.org/w/index.php?title=Information_retrieval&oldid=793358396#Average_precision)
+1. [Intution Behind Average Precision](https://makarandtapaswi.wordpress.com/2012/07/02/intuition-behind-average-precision-and-map/)
+2. [Wikipedia Average Precision](https://en.wikipedia.org/w/index.php?title=Information_retrieval&oldid=793358396#Average_precision)
 
 
 
@@ -444,9 +444,13 @@ This metric is also used in Object Detection.
 Balanced Accuracy is metric used to deal with Imbalanced dataset. It is the average of Sensitivity and Specificity . In more generic term averaging recall of all classes.
 
 Sensitivity covers the True Positive part and Specificity covers True Negative Part.
+
+
 $$
 Balanced\ Accuracy = \frac{sensitivity + specificity}{2}
 $$
+
+
 
 
 
