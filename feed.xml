@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://entiretydotai.github.io/blogs/feed.xml" rel="self" type="application/atom+xml" /><link href="https://entiretydotai.github.io/blogs/" rel="alternate" type="text/html" /><updated>2020-05-06T06:27:11-05:00</updated><id>https://entiretydotai.github.io/blogs/feed.xml</id><title type="html">Entiretydotai</title><subtitle>ML/DL Meetup Community.</subtitle><entry><title type="html">Metrics_blog</title><link href="https://entiretydotai.github.io/blogs/2020/05/06/Metrics_Blog.html" rel="alternate" type="text/html" title="Metrics_blog" /><published>2020-05-06T00:00:00-05:00</published><updated>2020-05-06T00:00:00-05:00</updated><id>https://entiretydotai.github.io/blogs/2020/05/06/Metrics_Blog</id><content type="html" xml:base="https://entiretydotai.github.io/blogs/2020/05/06/Metrics_Blog.html">&lt;h1 id=&quot;metrics&quot;&gt;Metrics&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://entiretydotai.github.io/blogs/feed.xml" rel="self" type="application/atom+xml" /><link href="https://entiretydotai.github.io/blogs/" rel="alternate" type="text/html" /><updated>2020-05-06T06:40:31-05:00</updated><id>https://entiretydotai.github.io/blogs/feed.xml</id><title type="html">Entiretydotai</title><subtitle>ML/DL Meetup Community.</subtitle><entry><title type="html">Metrics_blog</title><link href="https://entiretydotai.github.io/blogs/2020/05/06/Metrics_Blog.html" rel="alternate" type="text/html" title="Metrics_blog" /><published>2020-05-06T00:00:00-05:00</published><updated>2020-05-06T00:00:00-05:00</updated><id>https://entiretydotai.github.io/blogs/2020/05/06/Metrics_Blog</id><content type="html" xml:base="https://entiretydotai.github.io/blogs/2020/05/06/Metrics_Blog.html">&lt;h1 id=&quot;metrics&quot;&gt;Metrics&lt;/h1&gt;
 
 &lt;h2 id=&quot;example&quot;&gt;Example&lt;/h2&gt;
 
@@ -9,7 +9,7 @@ So in an Image if model predicts Dog that’s a positive class if it predicts no
 
 &lt;p&gt;A confusion matrix is a table that is used to describe the performance of a classification model.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;images/confusionmatrix.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;confusionmatrix.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Let’s consider this example table where N denotes the total number of images our model will predict upon.&lt;/p&gt;
 
