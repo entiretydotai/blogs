@@ -21,3 +21,5 @@ Find us at:
 
 **[Twitter](https://twitter.com/entiretydotai)**
 
+**Mail Us** :-     entirety.ai@gmail.com
+

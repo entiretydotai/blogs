@@ -394,11 +394,12 @@ Hamming loss: the fraction of the wrong labels to the total number of labels, i.
 
 
 $$
-hamming\ loss  = {\frac {1}{|N|\ . |L|}}\sum _{i=1}^{|N|}\sum _{j=1}^{|L|}xor (y_{i,j},z_{i,j}),\ where\ { y_{i,j}}\ y_{i,j}\ is\ the\ target\ and\ {z_{i,j}}\ z_{{i,j}}
+hamming\ loss  = {\frac {1}{|N|\ . |L|}}\sum_{i=1}^{|N|}\sum_{j=1}^{|L|}xor (y_{i,j},z_{i,j})
 $$
 
 
-is the prediction. This is a loss function, so the optimal value is zero.
+
+where y_ij target and z_ij is the prediction. This is a loss function, so the optimal value is zero.
 
 Hamming Loss computes Hamming distance and In information theory, the [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) between two strings of equal length is the number of positions at which the corresponding symbols are different. In other words, it measures the minimum number of substitutions required to change one string into the other, or the minimum number of errors that could have transformed one string into the other. In a more general context, the Hamming distance is one of several string metrics for measuring the edit distance between two sequences. It is named after the American mathematician Richard Hamming.
 
@@ -427,9 +428,11 @@ If there is no False prediction, then the model has +1 as a correlation coeffici
 ## Average Precision Score
 
 AP summarizes a precision-recall curve as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight:
+
 $$
 AP = \sum_n{(R_n-R_{n-1}) P_n}
 $$
+
 where Pn and Rn denotes the nth threshold. 
 
 This metric is also used in Object Detection.
