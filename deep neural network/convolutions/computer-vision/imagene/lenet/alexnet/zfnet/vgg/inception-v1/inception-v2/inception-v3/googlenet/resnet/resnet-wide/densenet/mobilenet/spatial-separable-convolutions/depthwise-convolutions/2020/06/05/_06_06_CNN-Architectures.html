@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>CNN Architectures(LeNet to DenseNet) | Entiretydotai</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="CNN Architectures(LeNet to DenseNet)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An in depth introduction to different State of the Art Convoutional Neural Networks" />
+<meta property="og:description" content="An in depth introduction to different State of the Art Convoutional Neural Networks" />
+<link rel="canonical" href="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html" />
+<meta property="og:url" content="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html" />
+<meta property="og:site_name" content="Entiretydotai" />
+<meta property="og:image" content="https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-05T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-06-05T00:00:00-05:00","dateModified":"2020-06-05T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html"},"description":"An in depth introduction to different State of the Art Convoutional Neural Networks","image":"https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg","@type":"BlogPosting","url":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html","headline":"CNN Architectures(LeNet to DenseNet)","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blogs/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://entiretydotai.github.io/blogs/feed.xml" title="Entiretydotai" /><link rel="shortcut icon" type="image/x-icon" href="/blogs/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>CNN Architectures(LeNet to DenseNet) | Entiretydotai</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="CNN Architectures(LeNet to DenseNet)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An in depth introduction to different State of the Art Convoutional Neural Networks" />
+<meta property="og:description" content="An in depth introduction to different State of the Art Convoutional Neural Networks" />
+<link rel="canonical" href="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html" />
+<meta property="og:url" content="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html" />
+<meta property="og:site_name" content="Entiretydotai" />
+<meta property="og:image" content="https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-05T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-06-05T00:00:00-05:00","dateModified":"2020-06-05T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html"},"description":"An in depth introduction to different State of the Art Convoutional Neural Networks","image":"https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg","@type":"BlogPosting","url":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html","headline":"CNN Architectures(LeNet to DenseNet)","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://entiretydotai.github.io/blogs/feed.xml" title="Entiretydotai" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blogs/">Entiretydotai</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blogs/about/">About us</a><a class="page-link" href="/blogs/search/">Search</a><a class="page-link" href="/blogs/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">CNN Architectures(LeNet to DenseNet)</h1><p class="page-description">An in depth introduction to different State of the Art Convoutional Neural Networks</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-05T00:00:00-05:00" itemprop="datePublished">
+        Jun 5, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      12 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blogs/categories/#deep neural network">deep neural network</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#convolutions">convolutions</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#computer-vision">computer-vision</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#ImageNe">ImageNe</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#LeNet">LeNet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#AlexNet">AlexNet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#ZFNet">ZFNet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#Vgg">Vgg</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#Inception-v1">Inception-v1</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#Inception-v2">Inception-v2</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#Inception-v3">Inception-v3</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#GoogleNet">GoogleNet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#ResNet">ResNet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#ResNet-Wide">ResNet-Wide</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#DenseNet">DenseNet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#MobileNet">MobileNet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#Spatial-Separable-Convolutions">Spatial-Separable-Convolutions</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#Depthwise-Convolutions">Depthwise-Convolutions</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/entiretydotai/blogs/tree/master/_notebooks/2020_06_06_CNN Architectures.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blogs/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/entiretydotai/blogs/master?filepath=_notebooks%2F2020_06_06_CNN+Architectures.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blogs/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/entiretydotai/blogs/blob/master/_notebooks/2020_06_06_CNN Architectures.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blogs/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Introduction">Introduction </a></li>
+<li class="toc-entry toc-h1"><a href="#What-is-ImageNet">What is ImageNet </a></li>
+<li class="toc-entry toc-h1"><a href="#LeNet-5(1998)">LeNet-5(1998) </a></li>
+<li class="toc-entry toc-h1"><a href="#AlexNet(2012)">AlexNet(2012) </a></li>
+<li class="toc-entry toc-h1"><a href="#ZFNet(2013)">ZFNet(2013) </a></li>
+<li class="toc-entry toc-h1"><a href="#VggNet(2014)">VggNet(2014) </a></li>
+<li class="toc-entry toc-h1"><a href="#Inception-Network-(GoogleNet)(2014)">Inception Network (GoogleNet)(2014) </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Inception-V1">Inception V1 </a></li>
+<li class="toc-entry toc-h2"><a href="#Inception-V2">Inception V2 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ResNet(2015)">ResNet(2015) </a></li>
+<li class="toc-entry toc-h1"><a href="#ResNet-Wide">ResNet-Wide </a></li>
+<li class="toc-entry toc-h1"><a href="#DenseNet(2017)">DenseNet(2017) </a></li>
+<li class="toc-entry toc-h1"><a href="#MobileNet">MobileNet </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Spatial-Seperable-Convolution">Spatial Seperable Convolution </a></li>
+<li class="toc-entry toc-h2"><a href="#Depthwise-Convolution">Depthwise Convolution </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#References">References </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020_06_06_CNN Architectures.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introduction">
+<a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
+</h1>
+<p>In this post,we  will talk about some of the most important papers that have been published over the last 5 years and discuss why they’re so important.We will go through different CNN Architectures (LeNet to DenseNet) showcasing the  advancements in general network architecture that made these architectures top the ILSVRC results.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="What-is-ImageNet">
+<a class="anchor" href="#What-is-ImageNet" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is ImageNet<a class="anchor-link" href="#What-is-ImageNet"> </a>
+</h1>
+<p><a href="http://www.image-net.org/">ImageNet</a></p>
+<p>ImageNet is formally a project aimed at (manually) labeling and categorizing images into almost 22,000 separate object categories for the purpose of computer vision research.</p>
+<p>However, when we hear the term “ImageNet” in the context of deep learning and Convolutional Neural Networks, we are likely referring to the ImageNet Large Scale Visual Recognition Challenge, or ILSVRC for short.</p>
+<p>The ImageNet project runs an annual software contest, the ImageNet Large Scale Visual Recognition Challenge (ILSVRC), where software programs compete to correctly classify and detect objects and scenes.</p>
+<p>The goal of this image classification challenge is to train a model that can correctly classify an input image into 1,000 separate object categories.</p>
+<p>Models are trained on ~1.2 million training images with another 50,000 images for validation and 100,000 images for testing.</p>
+<p>These 1,000 image categories represent object classes that we encounter in our day-to-day lives, such as species of dogs, cats, various household objects, vehicle types, and much more. You can find the full list of object categories in the ILSVRC challenge</p>
+<p>When it comes to image classification, the <strong>ImageNet</strong> challenge is the de facto benchmark for computer vision classification algorithms — and the leaderboard for this challenge has been dominated by Convolutional Neural Networks and deep learning techniques since 2012.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="LeNet-5(1998)">
+<a class="anchor" href="#LeNet-5(1998)" aria-hidden="true"><span class="octicon octicon-link"></span></a>LeNet-5(1998)<a class="anchor-link" href="#LeNet-5(1998)"> </a>
+</h1>
+<p><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf">Gradient Based Learning Applied to Document Recognition</a></p>
+<ol>
+<li>A pioneering 7-level convolutional network by LeCun  that classifies digits,</li>
+<li>Found its application by several banks to recognise hand-written numbers on checks (cheques) </li>
+<li>These numbers were digitized in 32x32 pixel greyscale which acted as an input images. </li>
+<li>The ability to process higher resolution images requires larger and more convolutional layers, so this technique is constrained by the availability of computing resources.</li>
+</ol>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*1TI1aGBZ4dybR6__DI9dzA.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="AlexNet(2012)">
+<a class="anchor" href="#AlexNet(2012)" aria-hidden="true"><span class="octicon octicon-link"></span></a>AlexNet(2012)<a class="anchor-link" href="#AlexNet(2012)"> </a>
+</h1>
+<p><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">ImageNet Classification with Deep Convolutional Networks</a></p>
+<ol>
+<li>One of the most influential publications in the field by Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton that started the revolution of CNN in Computer Vision.This was the first time a model performed so well on a historically difficult ImageNet dataset.</li>
+<li>The network consisted 11x11, 5x5,3x3, convolutions and made up of 5 conv layers, max-pooling layers, dropout layers, and 3 fully connected layers.</li>
+<li>Used ReLU for the nonlinearity functions (Found to decrease training time as ReLUs are several times faster than the conventional tanh function) and used  SGD with momentum for training.</li>
+<li>Used data augmentation techniques that consisted of image translations, horizontal reflections, and patch extractions.</li>
+<li>Implemented dropout layers in order to combat the problem of overfitting to the training data.</li>
+<li>Trained the model using batch stochastic gradient descent, with specific values for momentum and weight decay.</li>
+<li>AlexNet was trained for 6 days simultaneously on two Nvidia Geforce GTX 580 GPUs which is the reason for why their network is split into two pipelines.</li>
+<li>AlexNet significantly outperformed all the prior competitors and won the challenge by reducing the top-5 error from 26% to 15.3%
+<img src="/blogs/images/copied_from_nb/images/alexnet.PNG" alt="">
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ZFNet(2013)">
+<a class="anchor" href="#ZFNet(2013)" aria-hidden="true"><span class="octicon octicon-link"></span></a>ZFNet(2013)<a class="anchor-link" href="#ZFNet(2013)"> </a>
+</h1>
+<p><a href="https://cs.nyu.edu/~fergus/papers/zeilerECCV2014.pdf">Visualizing and Understanding Convolutional Neural Networks</a>
+<br>
+This architecture was more of a fine tuning to the previous AlexNet structure by tweaking the hyper-parameters of AlexNet while maintaining the same structure but still developed some very keys ideas about improving performance.Few minor modifications done were the following:</p>
+<ol>
+<li>AlexNet trained on 15 million images, while ZF Net trained on only 1.3 million images.</li>
+<li>Instead of using 11x11 sized filters in the first layer (which is what AlexNet implemented), ZF Net used filters of size 7x7 and a decreased stride value. The reasoning behind this modification is that a smaller filter size in the first conv layer helps retain a lot of original pixel information in the input volume. A filtering of size 11x11 proved to be skipping a lot of relevant information, especially as this is the first conv layer.</li>
+<li>As the network grows, we also see a rise in the number of filters used.</li>
+<li>Used ReLUs for their activation functions, cross-entropy loss for the error function, and trained using batch stochastic gradient descent.</li>
+<li>Trained on a GTX 580 GPU for twelve days.</li>
+<li>Developed a visualization technique named <strong>Deconvolutional Network</strong>, which helps to examine different feature activations and their relation to the input space. Called <strong>deconvnet</strong> because it maps features to pixels (the opposite of what a convolutional layer does).</li>
+<li>It achieved a top-5 error rate of 14.8%
+<img src="https://cdn-images-1.medium.com/max/1600/1*bFjBVvUL2Po_p2mKzC4iYQ.png" alt="">
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="VggNet(2014)">
+<a class="anchor" href="#VggNet(2014)" aria-hidden="true"><span class="octicon octicon-link"></span></a>VggNet(2014)<a class="anchor-link" href="#VggNet(2014)"> </a>
+</h1>
+<p><a href="https://arxiv.org/pdf/1409.1556v6.pdf">VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION</a></p>
+<p>This architecture is well konwn for <strong>Simplicity and depth</strong>.. VGGNet is very appealing because of its very uniform architecture.They proposed 6 different variations of VggNet however 16 layer with all 3x3 convolution produced the best result.</p>
+<p>Few things to note:</p>
+<ol>
+<li>The use of only 3x3 sized filters is quite different from AlexNet’s 11x11 filters in the first layer and ZF Net’s 7x7 filters. The authors’ reasoning is that the combination of two 3x3 conv layers has an effective receptive field of 5x5. This in turn simulates a larger filter while keeping the benefits of smaller filter sizes. One of the benefits is a decrease in the number of parameters. Also, with two conv layers, we’re able to use two ReLU layers instead of one.</li>
+<li>3 conv layers back to back have an effective receptive field of 7x7.</li>
+<li>As the spatial size of the input volumes at each layer decrease (result of the conv and pool layers), the depth of the volumes increase due to the increased number of filters as you go down the network.</li>
+<li>Interesting to notice that the number of filters doubles after each maxpool layer. This reinforces the idea of shrinking spatial dimensions, but growing depth.</li>
+<li>Worked well on both image classification and localization tasks. The authors used a form of localization as regression (see page 10 of the paper for all details).</li>
+<li>Built model with the Caffe toolbox.</li>
+<li>Used scale jittering as one data augmentation technique during training.</li>
+<li>Used ReLU layers after each conv layer and trained with batch gradient descent.</li>
+<li>Trained on 4 Nvidia Titan Black GPUs for two to three weeks.</li>
+<li>It achieved a top-5 error rate of 7.3% </li>
+</ol>
+<p><img src="https://neurohive.io/wp-content/uploads/2018/11/vgg16-1-e1542731207177.png" alt=""></p>
+<p><img src="/blogs/images/copied_from_nb/images/standardconvnet.PNG" alt="">
+<strong>In Standard ConvNet, input image goes through multiple convolution and obtain high-level features.</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After Inception V1 ,the author proposed a number of upgrades which increased the accuracy and reduced the computational complexity.This lead to many new upgrades resulting in different versions of Inception Network :</p>
+<ol>
+<li>Inception v2</li>
+<li>Inception V3</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Inception-Network-(GoogleNet)(2014)">
+<a class="anchor" href="#Inception-Network-(GoogleNet)(2014)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inception Network (GoogleNet)(2014)<a class="anchor-link" href="#Inception-Network-(GoogleNet)(2014)"> </a>
+</h1>
+<p><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf">Going Deeper with Convolutions</a></p>
+<p>Prior to this, most popular CNNs just stacked convolution layers deeper and deeper, hoping to get better performance,however <strong>Inception Network</strong> was one of the first CNN architectures that really strayed from the general approach of simply stacking conv and pooling layers on top of each other in a sequential structure and came up with the <strong>Inception Module</strong>.The Inception network  was complex. It used a lot of tricks to push performance; both in terms of speed and accuracy. Its constant evolution lead to the creation of several versions of the network. The popular versions are as follows:</p>
+<ol>
+<li>Inception v1.</li>
+<li>Inception v2 and Inception v3.</li>
+<li>Inception v4 and Inception-ResNet.
+<br>
+</li>
+</ol>
+<p>Each version is an iterative improvement over the previous one.Let us go ahead and explore them one by one
+<img src="/blogs/images/copied_from_nb/images/inception.PNG" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Inception-V1">
+<a class="anchor" href="#Inception-V1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inception V1<a class="anchor-link" href="#Inception-V1"> </a>
+</h2>
+<p><a href="https://arxiv.org/pdf/1409.4842v1.pdf">Inception v1</a></p>
+<p><img src="/blogs/images/copied_from_nb/images/dog.PNG" alt="">
+<strong>Problems this network tried to solve:</strong></p>
+<ol>
+<li>
+<strong>What is the right kernel size for convolution</strong>
+<br>
+A larger kernel is preferred for information that is distributed more globally, and a smaller kernel is preferred for information that is distributed more locally.
+<br>
+<strong>Ans-</strong> Filters with multiple sizes.The network essentially would get a bit “wider” rather than “deeper”
+<br>
+<br>
+</li>
+<li>
+<strong>How to stack convolution which can be less computationally expensive</strong>
+<br>
+Stacking them naively computationally expensive.
+<br>
+<strong>Ans-</strong>Limit the number of input channels by adding an extra 1x1 convolution before the 3x3 and 5x5 convolutions
+<br>
+<br>
+</li>
+<li>
+<strong>How to avoid overfitting in a very deep network</strong>
+<br>
+Very deep networks are prone to overfitting. It also hard to pass gradient updates through the entire network.
+<br>
+<strong>Ans-</strong>Introduce two auxiliary classifiers (The purple boxes in the image). They essentially applied softmax to the outputs of two of the inception modules, and computed an auxiliary loss over the same labels. The total loss function is a weighted sum of the auxiliary loss and the real loss.</li>
+</ol>
+<p>The total loss used by the inception net during training.
+<br>
+            <strong>total_loss = real_loss + 0.3 <em> aux_loss_1 + 0.3 </em> aux_loss_2</strong>
+<br>
+<br></p>
+<p><img src="/blogs/images/copied_from_nb/images/inception_module.PNG" alt=""></p>
+<p><strong>Points to note</strong></p>
+<ol>
+<li>Used 9 Inception modules in the whole architecture, with over 100 layers in total! Now that is deep…</li>
+<li>No use of fully connected layers! They use an average pool instead, to go from a 7x7x1024 volume to a 1x1x1024 volume. This saves a huge number of parameters.</li>
+<li>Uses 12x fewer parameters than AlexNet.</li>
+<li>Trained on “a few high-end GPUs within a week”.</li>
+<li>It achieved a top-5 error rate of 6.67% </li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Inception-V2">
+<a class="anchor" href="#Inception-V2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inception V2<a class="anchor-link" href="#Inception-V2"> </a>
+</h2>
+<p><a href="https://arxiv.org/pdf/1512.00567v3.pdf">Rethinking the Inception Architecture for Computer Vision</a></p>
+<p>Upgrades were targeted towards:</p>
+<ol>
+<li>Reducing representational bottleneck by replacing 5x5 convolution to two 3x3 convolution operations which further improves computational speed
+<br>
+The intuition was that, neural networks perform better when convolutions didn’t alter the dimensions of the input drastically. Reducing the dimensions too much may cause loss of information, known as a <strong>“representational bottleneck”</strong>
+<br>
+<img src="/blogs/images/copied_from_nb/images/inceptionv2.PNG" alt="">
+</li>
+<li>Using smart factorization method where they factorize convolutions of filter size nxn to a combination of 1xn and nx1 convolutions.
+<br>
+For example, a 3x3 convolution is equivalent to first performing a 1x3 convolution, and then performing a 3x1 convolution on its output. They found this method to be 33% more cheaper than the single 3x3 convolution.
+<br>
+<img src="/blogs/images/copied_from_nb/images/inceptionv2_1.PNG" alt="">
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ResNet(2015)">
+<a class="anchor" href="#ResNet(2015)" aria-hidden="true"><span class="octicon octicon-link"></span></a>ResNet(2015)<a class="anchor-link" href="#ResNet(2015)"> </a>
+</h1>
+<p><a href="https://arxiv.org/pdf/1512.03385.pdf">Deep Residual Learning for Image Recognition</a>
+<img src="/blogs/images/copied_from_nb/images/resnet_concept.PNG" alt="">
+<strong>In ResNet, identity mapping is proposed to promote the gradient propagation. Element-wise addition is used. It can be viewed as algorithms with a state passed from one ResNet module to another one.</strong></p>
+<p><img src="https://cdn-images-1.medium.com/max/720/1*ByrVJspW-TefwlH7OLxNkg.png" alt="">
+<img src="https://cdn-images-1.medium.com/max/720/1*2ns4ota94je5gSVjrpFq3A.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ResNet-Wide">
+<a class="anchor" href="#ResNet-Wide" aria-hidden="true"><span class="octicon octicon-link"></span></a>ResNet-Wide<a class="anchor-link" href="#ResNet-Wide"> </a>
+</h1>
+<p><img src="https://cdn-images-1.medium.com/max/960/1*7JzJ1RGh1Y4VoG1M4dseTw.png" alt="">
+left: a building block of [2], right: a building block of ResNeXt with cardinality = 32</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="DenseNet(2017)">
+<a class="anchor" href="#DenseNet(2017)" aria-hidden="true"><span class="octicon octicon-link"></span></a>DenseNet(2017)<a class="anchor-link" href="#DenseNet(2017)"> </a>
+</h1>
+<p><a href="https://arxiv.org/pdf/1608.06993v3.pdf">Densely Connected Convolutional Networks</a>
+<br>
+It is a logical extension to ResNet.</p>
+<p><strong>From the paper:</strong>
+Recent work has shown that convolutional networks can be substantially deeper, more accurate, and efficient to train if they contain shorter connections between layers close to the input and those close to the output. In this paper, we embrace this observation and introduce the Dense Convolutional Network (DenseNet), which connects each layer to every other layer in a feed-forward fashion.</p>
+<p><strong>DenseNet Architecture</strong>
+<img src="/blogs/images/copied_from_nb/images/densenet_arc.PNG" alt=""></p>
+<p>Let us explore different componenets of the network
+<br>
+<br>
+<strong>1. Dense Block</strong>
+<br>
+Feature map sizes are the same within the dense block so that they can be concatenated together easily.
+<img src="https://cdn-images-1.medium.com/max/960/1*9ysRPSExk0KvXR0AhNnlAA.gif" alt=""></p>
+<p><strong>In DenseNet, each layer obtains additional inputs from all preceding layers and passes on its own feature-maps to all subsequent layers. Concatenation is used. Each layer is receiving a “collective knowledge” from all preceding layers.</strong>
+<img src="/blogs/images/copied_from_nb/images/densenet_concept.PNG" alt=""></p>
+<p>Since each layer receives feature maps from all preceding layers, network can be thinner and compact, i.e. number of channels can be fewer. The growth rate k is the additional number of channels for each layer.</p>
+<p>The paper proposed different ways to implement DenseNet with/without B/C by adding some variations in the Dense block to further reduce the complexity,size and to bring more compression in the architecture.</p>
+
+<pre><code>1. Dense Block (DenseNet)
+    -  Batch Norm (BN)
+    -  ReLU
+    -  3×3 Convolution 
+2. Dense Block(DenseNet B)
+    -  Batch Norm (BN)
+    -  ReLU
+    -  1×1 Convolution
+    -  Batch Norm (BN)
+    -  ReLU
+    -  3×3 Convolution
+3. Dense Block(DenseNet C)
+    -  If a dense block contains m feature-maps, The transition layer generate $\theta $ output feature maps, where                    $\theta \leq \theata \leq$ is referred to as the compression factor.
+    -  $\theta$=0.5 was used in the experiemnt which reduced the number of feature maps by 50%.
+
+4. Dense Block(DenseNet BC)
+-  Combination of Densenet B and Densenet C
+</code></pre>
+<p><br>
+<strong>2. Trasition Layer</strong>
+<br>
+The layers between two adjacent blocks are referred to as transition layers  where the following operations are done to change feature-map sizes:</p>
+
+<pre><code> -  1×1 Convolution
+ -  2×2 Average pooling 
+
+
+</code></pre>
+<p><strong>Points to Note:</strong></p>
+<ol>
+<li>it requires fewer parameters than traditional convolutional networks</li>
+<li>Traditional convolutional networks with L layers have L connections — one between each layer and its subsequent layer — our network has L(L+1)/ 2 direct connections.</li>
+<li>Improved flow of information and gradients throughout the network, which makes them easy to train</li>
+<li>They alleviate the vanishing-gradient problem, strengthen feature propagation, encourage feature reuse, and substantially reduce the number of parameters.</li>
+<li>Concatenating feature maps instead of summing learned by different layers increases variation in the input of subsequent layers and improves efficiency. This constitutes a major difference between DenseNets and ResNets.</li>
+<li>It achieved a top-5 error rate of 6.66% </li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="MobileNet">
+<a class="anchor" href="#MobileNet" aria-hidden="true"><span class="octicon octicon-link"></span></a>MobileNet<a class="anchor-link" href="#MobileNet"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Spatial-Seperable-Convolution">
+<a class="anchor" href="#Spatial-Seperable-Convolution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spatial Seperable Convolution<a class="anchor-link" href="#Spatial-Seperable-Convolution"> </a>
+</h2>
+<p><img src="/blogs/images/copied_from_nb/images/separable_convolution.gif" alt=""></p>
+<p><strong>Divides a kernel into two, smaller kernels</strong></p>
+<p><img src="https://cdn-images-1.medium.com/max/1440/1*mL53fW0tJpNWEePp54y1Sg.png" alt=""></p>
+<p><strong>Instead of doing one convolution with 9 multiplications(parameters), we do two convolutions with 3 multiplications(parameters) each (6 in total) to achieve the same effect</strong></p>
+<p><img src="https://cdn-images-1.medium.com/max/1680/1*o3mKhG3nHS-1dWa_plCeFw.png" alt=""></p>
+<p><strong>With less multiplications, computational complexity goes down, and the network is able to run faster.</strong></p>
+<p>This was used in an architecture called <a href="https://arxiv.org/pdf/1801.06434v1.pdf">Effnet</a> showing promising results.</p>
+<p>The main issue with the spatial separable convolution is that not all kernels can be “separated” into two, smaller kernels. This becomes particularly bothersome during training, since of all the possible kernels the network could have adopted, it can only end up using one of the tiny portion that can be separated into two smaller kernels.</p>
+<h2 id="Depthwise-Convolution">
+<a class="anchor" href="#Depthwise-Convolution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Depthwise Convolution<a class="anchor-link" href="#Depthwise-Convolution"> </a>
+</h2>
+<p><img src="/blogs/images/copied_from_nb/images/depthwise.gif" alt=""></p>
+<p>Say we need to increase the number of channels from 16 to 32 using 3x3 kernel.
+<br></p>
+<p><strong>Normal Convolution</strong>
+<br>
+Total No of Parameters = 3 x 3 x 16 x 32 = 4608</p>
+<p><img src="https://cdn-images-1.medium.com/max/1200/1*VvBTMkVRus6bWOqrK1SlLQ.png" alt=""></p>
+<p><strong>Depthwise Convolution</strong></p>
+<ol>
+<li>DepthWise Convolution = 16 x [3 x 3 x 1]</li>
+<li>PointWise Convolution = 32 x [1 x 1 x 16]</li>
+</ol>
+<p>Total Number of Parameters = 656</p>
+<p><strong>Mobile net uses depthwise seperable convolution to reduce the number of parameters</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="References">
+<a class="anchor" href="#References" aria-hidden="true"><span class="octicon octicon-link"></span></a>References<a class="anchor-link" href="#References"> </a>
+</h1>
+<p><a href="http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture9.pdf">Standford CS231n Lecture Notes</a>
+<br>
+<a href="https://adeshpande3.github.io/adeshpande3.github.io/The-9-Deep-Learning-Papers-You-Need-To-Know-About.html">The 9 Deep Learning Papers You Need To Know About</a>
+<br>
+<a href="https://medium.com/@sidereal/cnns-architectures-lenet-alexnet-vgg-googlenet-resnet-and-more-666091488df5">CNN Architectures</a>
+<br>
+<a href="https://arxiv.org/pdf/1608.06037.pdf">Lets Keep It Simple</a>
+<br>
+<a href="https://www.pyimagesearch.com/2017/03/20/imagenet-vggnet-resnet-inception-xception-keras/">CNN Architectures Keras</a>
+<br>
+<a href="https://towardsdatascience.com/a-simple-guide-to-the-versions-of-the-inception-network-7fc52b863202">Inception Versions</a>
+<br>
+<a href="https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803">DenseNet Review</a>
+<br>
+<a href="https://towardsdatascience.com/densenet-2810936aeebb">DenseNet</a>
+<br>
+<a href="http://teleported.in/posts/decoding-resnet-architecture/">ResNet</a>
+<br>
+<a href="https://towardsdatascience.com/an-overview-of-resnet-and-its-variants-5281e2f56035">ResNet Versions</a>
+<br>
+<a href="https://towardsdatascience.com/a-basic-introduction-to-separable-convolutions-b99ec3102728">Depthwise Convolution</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="entiretydotai/blogs"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/06/05/_06_06_CNN-Architectures.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blogs/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blogs/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blogs/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>ML/DL Meetup Community.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/entiretydotai" title="entiretydotai"><svg class="svg-icon grey"><use xlink:href="/blogs/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/entiretydotai" title="entiretydotai"><svg class="svg-icon grey"><use xlink:href="/blogs/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
