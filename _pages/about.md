@@ -17,7 +17,7 @@ Find us at:
 
 **[Github](https://github.com/entiretydotai)**
 
-**[Gitlab](https://gitlab.com/entirety.ai/meetup-intuition-to-implementation)**
+**[Telegram](https://t.me/entirety_ai)**
 
 **[Twitter](https://twitter.com/entiretydotai)**
 
