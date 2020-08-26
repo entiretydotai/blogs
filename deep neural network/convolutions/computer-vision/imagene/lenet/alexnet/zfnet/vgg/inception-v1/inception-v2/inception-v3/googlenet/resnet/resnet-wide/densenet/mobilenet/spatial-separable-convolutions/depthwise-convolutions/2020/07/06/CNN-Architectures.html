@@ -9,14 +9,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="An in depth introduction to different State of the Art Convoutional Neural Networks" />
 <meta property="og:description" content="An in depth introduction to different State of the Art Convoutional Neural Networks" />
-<link rel="canonical" href="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html" />
-<meta property="og:url" content="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html" />
+<link rel="canonical" href="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html" />
+<meta property="og:url" content="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html" />
 <meta property="og:site_name" content="Entiretydotai" />
 <meta property="og:image" content="https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-08-06T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-07-06T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html"},"description":"An in depth introduction to different State of the Art Convoutional Neural Networks","@type":"BlogPosting","url":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html","headline":"CNN Architectures(LeNet to DenseNet)","dateModified":"2020-08-06T00:00:00-05:00","datePublished":"2020-08-06T00:00:00-05:00","image":"https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html"},"description":"An in depth introduction to different State of the Art Convoutional Neural Networks","@type":"BlogPosting","url":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html","headline":"CNN Architectures(LeNet to DenseNet)","dateModified":"2020-07-06T00:00:00-05:00","datePublished":"2020-07-06T00:00:00-05:00","image":"https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blogs/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://entiretydotai.github.io/blogs/feed.xml" title="Entiretydotai" /><link rel="shortcut icon" type="image/x-icon" href="/blogs/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>CNN Architectures(LeNet to DenseNet) | Entiretydotai</title>
@@ -25,14 +25,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="An in depth introduction to different State of the Art Convoutional Neural Networks" />
 <meta property="og:description" content="An in depth introduction to different State of the Art Convoutional Neural Networks" />
-<link rel="canonical" href="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html" />
-<meta property="og:url" content="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html" />
+<link rel="canonical" href="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html" />
+<meta property="og:url" content="https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html" />
 <meta property="og:site_name" content="Entiretydotai" />
 <meta property="og:image" content="https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-08-06T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-07-06T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html"},"description":"An in depth introduction to different State of the Art Convoutional Neural Networks","@type":"BlogPosting","url":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html","headline":"CNN Architectures(LeNet to DenseNet)","dateModified":"2020-08-06T00:00:00-05:00","datePublished":"2020-08-06T00:00:00-05:00","image":"https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html"},"description":"An in depth introduction to different State of the Art Convoutional Neural Networks","@type":"BlogPosting","url":"https://entiretydotai.github.io/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html","headline":"CNN Architectures(LeNet to DenseNet)","dateModified":"2020-07-06T00:00:00-05:00","datePublished":"2020-07-06T00:00:00-05:00","image":"https://entiretydotai.github.io/blogs/images/architectures_in_cnn.jpeg","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -103,8 +103,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">CNN Architectures(LeNet to DenseNet)</h1><p class="page-description">An in depth introduction to different State of the Art Convoutional Neural Networks</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-06T00:00:00-05:00" itemprop="datePublished">
-        Aug 6, 2020
+    <h1 class="post-title p-name" itemprop="name headline">CNN Architectures(LeNet to DenseNet)</h1><p class="page-description">An in depth introduction to different State of the Art Convoutional Neural Networks</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-06T00:00:00-05:00" itemprop="datePublished">
+        Jul 6, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -178,19 +178,19 @@ window.onload = wrap_img;
         <div class="pb-5 d-flex flex-wrap flex-justify-end">
           <div class="px-2">
 
-    <a href="https://github.com/entiretydotai/blogs/tree/master/_notebooks/2020-08-06-CNN Architectures.ipynb" role="button" target="_blank">
+    <a href="https://github.com/entiretydotai/blogs/tree/master/_notebooks/2020-07-06-CNN Architectures.ipynb" role="button" target="_blank">
 <img class="notebook-badge-image" src="/blogs/assets/badges/github.svg" alt="View On GitHub">
     </a>
 </div>
 
           <div class="px-2">
-    <a href="https://mybinder.org/v2/gh/entiretydotai/blogs/master?filepath=_notebooks%2F2020-08-06-CNN+Architectures.ipynb" target="_blank">
+    <a href="https://mybinder.org/v2/gh/entiretydotai/blogs/master?filepath=_notebooks%2F2020-07-06-CNN+Architectures.ipynb" target="_blank">
         <img class="notebook-badge-image" src="/blogs/assets/badges/binder.svg" alt="Open In Binder"/>
     </a>
 </div>
 
           <div class="px-2">
-    <a href="https://colab.research.google.com/github/entiretydotai/blogs/blob/master/_notebooks/2020-08-06-CNN Architectures.ipynb" target="_blank">
+    <a href="https://colab.research.google.com/github/entiretydotai/blogs/blob/master/_notebooks/2020-07-06-CNN Architectures.ipynb" target="_blank">
         <img class="notebook-badge-image" src="/blogs/assets/badges/colab.svg" alt="Open In Colab"/>
     </a>
 </div>
@@ -225,7 +225,7 @@ window.onload = wrap_img;
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/2020-08-06-CNN Architectures.ipynb
+# file to edit: _notebooks/2020-07-06-CNN Architectures.ipynb
 -->
 
 <div class="container" id="notebook-container">
@@ -651,7 +651,7 @@ Total No of Parameters = 3 x 3 x 16 x 32 = 4608</p>
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/08/06/CNN-Architectures.html" hidden></a>
+</script><a class="u-url" href="/blogs/deep%20neural%20network/convolutions/computer-vision/imagene/lenet/alexnet/zfnet/vgg/inception-v1/inception-v2/inception-v3/googlenet/resnet/resnet-wide/densenet/mobilenet/spatial-separable-convolutions/depthwise-convolutions/2020/07/06/CNN-Architectures.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
