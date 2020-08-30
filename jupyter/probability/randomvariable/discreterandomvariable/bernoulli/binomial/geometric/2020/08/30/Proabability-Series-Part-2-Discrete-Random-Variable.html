@@ -184,7 +184,7 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h3"><a href="#Expectation/Mean-of-Binomial-Distribution">Expectation/Mean of Binomial Distribution </a></li>
 <li class="toc-entry toc-h3"><a href="#Probability-Mass-function-of-Binomial-Distribution">Probability Mass function of Binomial Distribution </a></li>
-<li class="toc-entry toc-h3"><a href="#Probability-Density-function-of-Binomial-Distribution">Probability Density function of Binomial Distribution </a></li>
+<li class="toc-entry toc-h3"><a href="#Probability-Distribution-function-of-Binomial-Distribution">Probability Distribution function of Binomial Distribution </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Geometric-Distribution">Geometric Distribution </a>
@@ -192,7 +192,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Expectation/Mean-of-Geometric-Distribution">Expectation/Mean of Geometric Distribution </a></li>
 <li class="toc-entry toc-h3"><a href="#Variance-of-Geometric-Distribution">Variance of Geometric Distribution </a></li>
 <li class="toc-entry toc-h3"><a href="#Probability-Mass-Function">Probability Mass Function </a></li>
-<li class="toc-entry toc-h3"><a href="#Probability-Density-Function">Probability Density Function </a></li>
+<li class="toc-entry toc-h3"><a href="#Probability-Distribution-Function">Probability Distribution Function </a></li>
 </ul>
 </li>
 </ul>
@@ -559,8 +559,8 @@ $$Var(X)  = p(n-p) + p(n-p) .... = n. p(n-p)$$
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Probability-Density-function-of-Binomial-Distribution">
-<a class="anchor" href="#Probability-Density-function-of-Binomial-Distribution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probability Density function of Binomial Distribution<a class="anchor-link" href="#Probability-Density-function-of-Binomial-Distribution"> </a>
+<h3 id="Probability-Distribution-function-of-Binomial-Distribution">
+<a class="anchor" href="#Probability-Distribution-function-of-Binomial-Distribution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probability Distribution function of Binomial Distribution<a class="anchor-link" href="#Probability-Distribution-function-of-Binomial-Distribution"> </a>
 </h3>
 <p><img src="/blogs/images/copied_from_nb/images/binomial_pdf.png" alt=""></p>
 
@@ -926,8 +926,8 @@ $$Var[X] =  \frac{(1-p)}{p^2}$$
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Probability-Density-Function">
-<a class="anchor" href="#Probability-Density-Function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probability Density Function<a class="anchor-link" href="#Probability-Density-Function"> </a>
+<h3 id="Probability-Distribution-Function">
+<a class="anchor" href="#Probability-Distribution-Function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probability Distribution Function<a class="anchor-link" href="#Probability-Distribution-Function"> </a>
 </h3>
 </div>
 </div>
@@ -951,7 +951,7 @@ $$Var[X] =  \frac{(1-p)}{p^2}$$
 
 <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">geom</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">colors</span><span class="o">=</span><span class="s1">'b'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">'best'</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Probability Density Function"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Probability Distribution Function"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"X"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"P(X)"</span><span class="p">)</span>
 
