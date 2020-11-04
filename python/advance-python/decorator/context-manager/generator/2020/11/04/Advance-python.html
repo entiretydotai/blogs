@@ -1,4 +1,219 @@
-<!--
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Stackoverflow: So you want to write _Pythonic code_ in _Python_ | Entiretydotai</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Stackoverflow: So you want to write _Pythonic code_ in _Python_" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Advance python and some sweet python tips and tricks." />
+<meta property="og:description" content="Advance python and some sweet python tips and tricks." />
+<link rel="canonical" href="https://entiretydotai.github.io/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html" />
+<meta property="og:url" content="https://entiretydotai.github.io/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html" />
+<meta property="og:site_name" content="Entiretydotai" />
+<meta property="og:image" content="https://entiretydotai.github.io/blogs/images/python.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-04T00:00:00-06:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://entiretydotai.github.io/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html"},"description":"Advance python and some sweet python tips and tricks.","@type":"BlogPosting","url":"https://entiretydotai.github.io/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html","headline":"Stackoverflow: So you want to write _Pythonic code_ in _Python_","dateModified":"2020-11-04T00:00:00-06:00","datePublished":"2020-11-04T00:00:00-06:00","image":"https://entiretydotai.github.io/blogs/images/python.png","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blogs/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://entiretydotai.github.io/blogs/feed.xml" title="Entiretydotai" /><link rel="shortcut icon" type="image/x-icon" href="/blogs/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Stackoverflow: So you want to write _Pythonic code_ in _Python_ | Entiretydotai</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Stackoverflow: So you want to write _Pythonic code_ in _Python_" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Advance python and some sweet python tips and tricks." />
+<meta property="og:description" content="Advance python and some sweet python tips and tricks." />
+<link rel="canonical" href="https://entiretydotai.github.io/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html" />
+<meta property="og:url" content="https://entiretydotai.github.io/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html" />
+<meta property="og:site_name" content="Entiretydotai" />
+<meta property="og:image" content="https://entiretydotai.github.io/blogs/images/python.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-04T00:00:00-06:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://entiretydotai.github.io/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html"},"description":"Advance python and some sweet python tips and tricks.","@type":"BlogPosting","url":"https://entiretydotai.github.io/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html","headline":"Stackoverflow: So you want to write _Pythonic code_ in _Python_","dateModified":"2020-11-04T00:00:00-06:00","datePublished":"2020-11-04T00:00:00-06:00","image":"https://entiretydotai.github.io/blogs/images/python.png","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://entiretydotai.github.io/blogs/feed.xml" title="Entiretydotai" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blogs/">Entiretydotai</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blogs/about/">About us</a><a class="page-link" href="/blogs/search/">Search</a><a class="page-link" href="/blogs/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Stackoverflow: So you want to write *_Pythonic code_* in *_Python_*</h1><p class="page-description">Advance python and some sweet python tips and tricks.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-11-04T00:00:00-06:00" itemprop="datePublished">
+        Nov 4, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      14 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blogs/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#advance-python">advance-python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#decorator">decorator</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#context-manager">context-manager</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blogs/categories/#generator">generator</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/entiretydotai/blogs/tree/master/_notebooks/2020-11-04-Advance-python.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blogs/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/entiretydotai/blogs/master?filepath=_notebooks%2F2020-11-04-Advance-python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blogs/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/entiretydotai/blogs/blob/master/_notebooks/2020-11-04-Advance-python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blogs/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Lambda-and-Comphresions">Lambda and Comphresions </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Functions-in-python-are-first-class-Objects-that-means-you-can-assign-them-to-variable,-store-them-in-data-structure,-pass-them-as-a-parameter-to-other-functions-and-even-return-them-from-other-function">Functions in python are first class Objects that means you can assign them to variable, store them in data structure, pass them as a parameter to other functions and even return them from other function </a></li>
+<li class="toc-entry toc-h4"><a href="#So-lambdas-are-a--sweet-Little-anonymous-Single-Expression-functions">So lambdas are a  sweet Little anonymous Single-Expression functions </a></li>
+<li class="toc-entry toc-h3"><a href="#You-:--But-Wait--it's-an-anonymous-function-and-how-can-you--give-it-a-name">You :- But Wait  it&#39;s an anonymous function and how can you  give it a name </a></li>
+<li class="toc-entry toc-h3"><a href="#StackOverflow-:--Relax,-Searching-for-another-example">StackOverflow :- Relax, Searching for another example </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Decorators">Decorators </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Stackoverflow-:--Now-that-you-got-a-little-taste-of-Decorators-let's-write-another-decorator-that-actually-does-something-and-modifies-the-behavior-of-the-decorated-function.">Stackoverflow :- Now that you got a little taste of Decorators let&#39;s write another decorator that actually does something and modifies the behavior of the decorated function. </a></li>
+<li class="toc-entry toc-h3"><a href="#You-:---Why-didn't-I-got-the-doc-and-the-name-of-my-function.-Hmmm....">You :-  Why didn&#39;t I got the doc and the name of my function. Hmmm.... </a></li>
+<li class="toc-entry toc-h3"><a href="#StackOverflow-:--Great-Programmers-use-me-as-there-debugging-tool,-so-use-It.">StackOverflow :- Great Programmers use me as there debugging tool, so use It. </a></li>
+<li class="toc-entry toc-h3"><a href="#StackOverflow-:---Applying-Multiple-Decorators-to-a-Function-(This-is-really-fascinating-as-it's-gonna-confuse-you)">StackOverflow : - Applying Multiple Decorators to a Function (This is really fascinating as it&#39;s gonna confuse you) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Context-Managers">Context Managers </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#You-:--ok-now-that-I-have-wrote-something-into-the-file-I-want-to-read-it,--but-try-and-finally-again,-it-suck's.-There-should-be-some-other-way-around">You :- ok now that I have wrote something into the file I want to read it,  but try and finally again, it suck&#39;s. There should be some other way around </a></li>
+<li class="toc-entry toc-h3"><a href="#StackOverflow-:---Context-manger-for-your-Rescue">StackOverflow :-  Context manger for your Rescue </a></li>
+<li class="toc-entry toc-h3"><a href="#You-:--That's-pretty-easy-but-what-is-with">You :- That&#39;s pretty easy but what is with </a></li>
+<li class="toc-entry toc-h3"><a href="#Stackoverflow-:-">Stackoverflow :- </a></li>
+<li class="toc-entry toc-h3"><a href="#You-:--But-I-want-to-use-with-for-my-own-use-case-how-do-I-do-it?">You :- But I want to use with for my own use case how do I do it? </a></li>
+<li class="toc-entry toc-h3"><a href="#StackOverflow-:--Use-Data-Models-and-relax">StackOverflow :- Use Data Models and relax </a></li>
+<li class="toc-entry toc-h3"><a href="#You-:--It-works-but-what-are-those-parameters-in-exit-method">You :- It works but what are those parameters in exit method </a></li>
+<li class="toc-entry toc-h3"><a href="#Stackoverflow-:--Google-It-!">Stackoverflow :- Google It ! </a></li>
+<li class="toc-entry toc-h3"><a href="#You-:--But-writing-a-class-in-python-is-hectic,-I-want-to-do-functional-Programming">You :- But writing a class in python is hectic, I want to do functional Programming </a></li>
+<li class="toc-entry toc-h3"><a href="#StackOverflow-:--Use-Decorators">StackOverflow :- Use Decorators </a></li>
+<li class="toc-entry toc-h3"><a href="#You-:--Ok,-that's-what-I-call-a-pythonic-code-but-what-is-yeild">You :- Ok, that&#39;s what I call a pythonic code but what is yeild </a></li>
+<li class="toc-entry toc-h3"><a href="#Stackoverflow-:---Hang-On!">Stackoverflow :-  Hang On! </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Iterators-and-Generators">Iterators and Generators </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#You-:--Again-a-class">You :- Again a class </a></li>
+<li class="toc-entry toc-h3"><a href="#StackOverflow-:--OK-here's-a-easy-way-Use-Generators">StackOverflow :- OK here&#39;s a easy way Use Generators </a></li>
+<li class="toc-entry toc-h3"><a href="#zip(iterA,-iterB,-...)-takes-one-element-from-each-iterable-and-returns-them-in-a-tuple:">zip(iterA, iterB, ...) takes one element from each iterable and returns them in a tuple: </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Functools-and-Itertools-(This-is-going-to-blow-your-mind)">Functools and Itertools (This is going to blow your mind) </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#To-read-more-about-itertools-https://docs.python.org/3.6/howto/functional.html#creating-new-iterators">To read more about itertools https://docs.python.org/3.6/howto/functional.html#creating-new-iterators </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Some-Python-Tricks">Some Python Tricks </a></li>
+<li class="toc-entry toc-h1"><a href="#Refer-these-To-be-GREAT-IN-PYTHON">Refer these To be GREAT IN PYTHON </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Python-Doc">Python Doc </a></li>
+<li class="toc-entry toc-h3"><a href="#Real-Python">Real Python </a></li>
+<li class="toc-entry toc-h3"><a href="#Youtube-PyData">Youtube PyData </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#THE-END">THE END </a></li>
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -14,35 +229,21 @@
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Learn-These">Learn These<a class="anchor-link" href="#Learn-These"> </a></h2>
-<pre><code>    1. Lambda and Comphresions
-    2. Decorators
-    3. Context Managers
-    4. Iterators and Generators
-    6. Functools and Itertools
-    5. Data Classes
-    7. Some Sweet Python tips and tricks</code></pre>
-
+<h1 id="Lambda-and-Comphresions">
+<a class="anchor" href="#Lambda-and-Comphresions" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Lambda and Comphresions</em><a class="anchor-link" href="#Lambda-and-Comphresions"> </a>
+</h1>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Lambda-and-Comphresions"><em>Lambda and Comphresions</em><a class="anchor-link" href="#Lambda-and-Comphresions"> </a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Functions-in-python-are-first-class-Objects-that-means-you-can-assign-them-to-variable,-store-them-in-data-structure,-pass-them-as-a-parameter-to-other-functions-and-even-return-them-from-other-function">Functions in python are first class Objects that means you can assign them to variable, store them in data structure, pass them as a parameter to other functions and even return them from other function<a class="anchor-link" href="#Functions-in-python-are-first-class-Objects-that-means-you-can-assign-them-to-variable,-store-them-in-data-structure,-pass-them-as-a-parameter-to-other-functions-and-even-return-them-from-other-function"> </a></h4>
+<h4 id="Functions-in-python-are-first-class-Objects-that-means-you-can-assign-them-to-variable,-store-them-in-data-structure,-pass-them-as-a-parameter-to-other-functions-and-even-return-them-from-other-function">
+<a class="anchor" href="#Functions-in-python-are-first-class-Objects-that-means-you-can-assign-them-to-variable,-store-them-in-data-structure,-pass-them-as-a-parameter-to-other-functions-and-even-return-them-from-other-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functions in python are first class Objects that means you can assign them to variable, store them in data structure, pass them as a parameter to other functions and even return them from other function<a class="anchor-link" href="#Functions-in-python-are-first-class-Objects-that-means-you-can-assign-them-to-variable,-store-them-in-data-structure,-pass-them-as-a-parameter-to-other-functions-and-even-return-them-from-other-function"> </a>
+</h4>
 </div>
 </div>
 </div>
@@ -56,14 +257,14 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># addition function </span>
 <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
-<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot; function is add(5,6) = </span><span class="si">{</span><span class="n">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">" function is add(5,6) = </span><span class="si">{</span><span class="n">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="c1"># you can assign them to other variable</span>
 <span class="n">myAdd</span> <span class="o">=</span> <span class="n">add</span>
 <span class="c1"># wait you can also delete the add function and  the myAdd still points to underlying function</span>
 <span class="k">del</span> <span class="n">add</span>
-<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot; function is myAdd(5,6) = </span><span class="si">{</span><span class="n">myAdd</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">" function is myAdd(5,6) = </span><span class="si">{</span><span class="n">myAdd</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="c1">#functions have their own set of attributes </span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">myAdd</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">myAdd</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="c1"># to see a complete list of attributes of a function type dir(myAdd) in console</span>
 </pre></div>
 
@@ -100,7 +301,7 @@ add
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># functions as data structures</span>
 <span class="n">List_Funcs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span> <span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">lower</span> <span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">title</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">List_Funcs</span><span class="p">:</span>
-    <span class="nb">print</span> <span class="p">(</span><span class="n">f</span> <span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="s2">&quot;aI6-saturdays&quot;</span><span class="p">))</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">f</span> <span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="s2">"aI6-saturdays"</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -113,9 +314,9 @@ add
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;method &#39;upper&#39; of &#39;str&#39; objects&gt; AI6-SATURDAYS
-&lt;method &#39;lower&#39; of &#39;str&#39; objects&gt; ai6-saturdays
-&lt;method &#39;title&#39; of &#39;str&#39; objects&gt; Ai6-Saturdays
+<pre>&lt;method 'upper' of 'str' objects&gt; AI6-SATURDAYS
+&lt;method 'lower' of 'str' objects&gt; ai6-saturdays
+&lt;method 'title' of 'str' objects&gt; Ai6-Saturdays
 </pre>
 </div>
 </div>
@@ -126,9 +327,12 @@ add
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="So-lambdas-are-a--sweet-Little-anonymous-Single-Expression-functions">So lambdas are a  sweet Little anonymous Single-Expression functions<a class="anchor-link" href="#So-lambdas-are-a--sweet-Little-anonymous-Single-Expression-functions"> </a></h4>
+<h4 id="So-lambdas-are-a--sweet-Little-anonymous-Single-Expression-functions">
+<a class="anchor" href="#So-lambdas-are-a--sweet-Little-anonymous-Single-Expression-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>So lambdas are a  sweet Little anonymous Single-Expression functions<a class="anchor-link" href="#So-lambdas-are-a--sweet-Little-anonymous-Single-Expression-functions"> </a>
+</h4>
 </div>
 </div>
 </div>
@@ -140,7 +344,7 @@ add
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">add_lambda</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="c1"># lambda automaticaly returns the value after colon</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;lambda value add_lambda(2,3)= </span><span class="si">{</span><span class="n">add_lambda</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1">#you call lambda function as normal functions</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"lambda value add_lambda(2,3)= </span><span class="si">{</span><span class="n">add_lambda</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="c1">#you call lambda function as normal functions</span>
 </pre></div>
 
     </div>
@@ -164,9 +368,15 @@ add
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="You-:--But-Wait--it's-an-anonymous-function-and-how-can-you--give-it-a-name">You :- But Wait  it's an anonymous function and how can you  give it a name<a class="anchor-link" href="#You-:--But-Wait--it's-an-anonymous-function-and-how-can-you--give-it-a-name"> </a></h2><h2 id="StackOverflow-:--Relax,-Searching-for-another-example">StackOverflow :- Relax, Searching for another example<a class="anchor-link" href="#StackOverflow-:--Relax,-Searching-for-another-example"> </a></h2>
+<h3 id="You-:--But-Wait--it's-an-anonymous-function-and-how-can-you--give-it-a-name">
+<a class="anchor" href="#You-:--But-Wait--it's-an-anonymous-function-and-how-can-you--give-it-a-name" aria-hidden="true"><span class="octicon octicon-link"></span></a>You :- But Wait  it's an anonymous function and how can you  give it a name<a class="anchor-link" href="#You-:--But-Wait--it's-an-anonymous-function-and-how-can-you--give-it-a-name"> </a>
+</h3>
+<h3 id="StackOverflow-:--Relax,-Searching-for-another-example">
+<a class="anchor" href="#StackOverflow-:--Relax,-Searching-for-another-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>StackOverflow :- Relax, Searching for another example<a class="anchor-link" href="#StackOverflow-:--Relax,-Searching-for-another-example"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -178,12 +388,12 @@ add
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">someFunc</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="n">quote</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="s2">&quot;We will democratize AI &quot;</span><span class="p">)</span>
+    <span class="n">quote</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="s2">"We will democratize AI "</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">quote</span>
 <span class="c1"># here the lambda function is passes to a normal function </span>
 <span class="c1"># the lambda here is anonymous and the parameter my_sentence = We will democratize AI </span>
 <span class="c1"># so we are adding some text of ours and returning the string</span>
-<span class="n">someFunc</span><span class="p">(</span><span class="k">lambda</span> <span class="n">my_sentence</span><span class="p">:</span> <span class="n">my_sentence</span><span class="o">+</span><span class="s2">&quot;by teaching everyone AI&quot;</span><span class="p">)</span>
+<span class="n">someFunc</span><span class="p">(</span><span class="k">lambda</span> <span class="n">my_sentence</span><span class="p">:</span> <span class="n">my_sentence</span><span class="o">+</span><span class="s2">"by teaching everyone AI"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -198,7 +408,7 @@ add
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;We will democratize AI by teaching everyone AI&#39;</pre>
+<pre>'We will democratize AI by teaching everyone AI'</pre>
 </div>
 
 </div>
@@ -217,7 +427,7 @@ add
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># here is one more example</span>
-<span class="n">tuples</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)]</span>
+<span class="n">tuples</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'d'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">)]</span>
 <span class="nb">sorted</span><span class="p">(</span><span class="n">tuples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 
@@ -303,9 +513,13 @@ add
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Decorators">Decorators<a class="anchor-link" href="#Decorators"> </a></h1><p>Python’s decorators allow you to extend and modify the
+<h1 id="Decorators">
+<a class="anchor" href="#Decorators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorators<a class="anchor-link" href="#Decorators"> </a>
+</h1>
+<p>Python’s decorators allow you to extend and modify the
 behavior of a callable (functions, methods, and classes) without permanently modifying the callable itself.</p>
 <p>Any sufficiently generic functionality you can tack on to an existing
 class or function’s behavior makes a great use case for decoration.
@@ -331,11 +545,11 @@ This includes the following:</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">func</span>  <span class="c1"># It&#39;s simple right it takes a function as it&#39;s parameter and returns it</span>
+    <span class="k">return</span> <span class="n">func</span>  <span class="c1"># It's simple right it takes a function as it's parameter and returns it</span>
 <span class="k">def</span> <span class="nf">someFunc</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">&quot;Deep learning is fun&quot;</span>
+    <span class="k">return</span> <span class="s2">"Deep learning is fun"</span>
 <span class="n">someFunc</span> <span class="o">=</span> <span class="n">my_decorator</span><span class="p">(</span><span class="n">someFunc</span><span class="p">)</span> <span class="c1"># it is similar to i = i + 1</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; someFunc value  = </span><span class="si">{</span><span class="n">someFunc</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">" someFunc value  = </span><span class="si">{</span><span class="n">someFunc</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -373,9 +587,9 @@ This includes the following:</p>
 
 <span class="nd">@my_decorator</span>  <span class="c1"># the awesomeness of this block of code lies here which can be used as toggle switch</span>
 <span class="k">def</span> <span class="nf">someFunc</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">&quot;Deep learning is fun&quot;</span>
+    <span class="k">return</span> <span class="s2">"Deep learning is fun"</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; someFunc value  = </span><span class="si">{</span><span class="n">someFunc</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">" someFunc value  = </span><span class="si">{</span><span class="n">someFunc</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -399,9 +613,12 @@ This includes the following:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Stackoverflow-:--Now-that-you-got-a-little-taste-of-Decorators-let's-write-another-decorator-that-actually-does-something-and-modifies-the-behavior-of-the-decorated-function.">Stackoverflow :- Now that you got a little taste of Decorators let's write another decorator that actually does something and modifies the behavior of the decorated function.<a class="anchor-link" href="#Stackoverflow-:--Now-that-you-got-a-little-taste-of-Decorators-let's-write-another-decorator-that-actually-does-something-and-modifies-the-behavior-of-the-decorated-function."> </a></h2>
+<h3 id="Stackoverflow-:--Now-that-you-got-a-little-taste-of-Decorators-let's-write-another-decorator-that-actually-does-something-and-modifies-the-behavior-of-the-decorated-function.">
+<a class="anchor" href="#Stackoverflow-:--Now-that-you-got-a-little-taste-of-Decorators-let's-write-another-decorator-that-actually-does-something-and-modifies-the-behavior-of-the-decorated-function." aria-hidden="true"><span class="octicon octicon-link"></span></a>Stackoverflow :- Now that you got a little taste of Decorators let's write another decorator that actually does something and modifies the behavior of the decorated function.<a class="anchor-link" href="#Stackoverflow-:--Now-that-you-got-a-little-taste-of-Decorators-let's-write-another-decorator-that-actually-does-something-and-modifies-the-behavior-of-the-decorated-function."> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -423,14 +640,14 @@ This includes the following:</p>
         <span class="n">call_of_func</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c1"># this works because you can function can be nested and they remember the state</span>
         <span class="n">function_modification</span> <span class="o">=</span> <span class="n">call_of_func</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
         <span class="n">endtime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot; Executed output is </span><span class="si">{</span><span class="n">function_modification</span><span class="si">}</span><span class="s2"> and time is </span><span class="si">{</span><span class="n">endtime</span><span class="o">-</span><span class="n">starttime</span><span class="si">}</span><span class="s2"> &quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">" Executed output is </span><span class="si">{</span><span class="n">function_modification</span><span class="si">}</span><span class="s2"> and time is </span><span class="si">{</span><span class="n">endtime</span><span class="o">-</span><span class="n">starttime</span><span class="si">}</span><span class="s2"> "</span>
     <span class="k">return</span> <span class="n">wrapper</span>
 
 <span class="nd">@myTimeItDeco</span>
 <span class="k">def</span> <span class="nf">myFunc</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">,</span><span class="n">arg3</span><span class="p">):</span> <span class="c1"># some arguments of no use to show how to pass them in code</span>
-    <span class="sd">&quot;&quot;&quot;Documentation of a obfuscate function&quot;&quot;&quot;</span>
+    <span class="sd">"""Documentation of a obfuscate function"""</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># just to show some complex calculation</span>
-    <span class="k">return</span> <span class="s2">&quot;You had me at Hello world&quot;</span>
+    <span class="k">return</span> <span class="s2">"You had me at Hello world"</span>
 
 <span class="n">myFunc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="n">myFunc</span><span class="o">.</span><span class="vm">__doc__</span> <span class="p">,</span> <span class="n">myFunc</span><span class="o">.</span><span class="vm">__name__</span> 
 </pre></div>
@@ -447,9 +664,9 @@ This includes the following:</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39; Executed output is YOU HAD ME AT HELLO WORLD and time is 2.0032527446746826 &#39;,
+<pre>(' Executed output is YOU HAD ME AT HELLO WORLD and time is 2.0032527446746826 ',
  None,
- &#39;wrapper&#39;)</pre>
+ 'wrapper')</pre>
 </div>
 
 </div>
@@ -460,16 +677,26 @@ This includes the following:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="You-:---Why-didn't-I-got-the-doc-and-the-name-of-my-function.-Hmmm....">You :-  Why didn't I got the doc and the name of my function. Hmmm....<a class="anchor-link" href="#You-:---Why-didn't-I-got-the-doc-and-the-name-of-my-function.-Hmmm...."> </a></h2><h2 id="StackOverflow-:--Great-Programmers-use-me-as-there-debugging-tool,-so-use-It.">StackOverflow :- Great Programmers use me as there debugging tool, so use It.<a class="anchor-link" href="#StackOverflow-:--Great-Programmers-use-me-as-there-debugging-tool,-so-use-It."> </a></h2><p>Hints functools.wrap</p>
+<h3 id="You-:---Why-didn't-I-got-the-doc-and-the-name-of-my-function.-Hmmm....">
+<a class="anchor" href="#You-:---Why-didn't-I-got-the-doc-and-the-name-of-my-function.-Hmmm...." aria-hidden="true"><span class="octicon octicon-link"></span></a>You :-  Why didn't I got the doc and the name of my function. Hmmm....<a class="anchor-link" href="#You-:---Why-didn't-I-got-the-doc-and-the-name-of-my-function.-Hmmm...."> </a>
+</h3>
+<h3 id="StackOverflow-:--Great-Programmers-use-me-as-there-debugging-tool,-so-use-It.">
+<a class="anchor" href="#StackOverflow-:--Great-Programmers-use-me-as-there-debugging-tool,-so-use-It." aria-hidden="true"><span class="octicon octicon-link"></span></a>StackOverflow :- Great Programmers use me as there debugging tool, so use It.<a class="anchor-link" href="#StackOverflow-:--Great-Programmers-use-me-as-there-debugging-tool,-so-use-It."> </a>
+</h3>
+<p>Hints functools.wrap</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="StackOverflow-:---Applying-Multiple-Decorators-to-a-Function-(This-is-really-fascinating-as-it's-gonna-confuse-you)">StackOverflow : - Applying Multiple Decorators to a Function (This is really fascinating as it's gonna confuse you)<a class="anchor-link" href="#StackOverflow-:---Applying-Multiple-Decorators-to-a-Function-(This-is-really-fascinating-as-it's-gonna-confuse-you)"> </a></h3>
+<h3 id="StackOverflow-:---Applying-Multiple-Decorators-to-a-Function-(This-is-really-fascinating-as-it's-gonna-confuse-you)">
+<a class="anchor" href="#StackOverflow-:---Applying-Multiple-Decorators-to-a-Function-(This-is-really-fascinating-as-it's-gonna-confuse-you)" aria-hidden="true"><span class="octicon octicon-link"></span></a>StackOverflow : - Applying Multiple Decorators to a Function (This is really fascinating as it's gonna confuse you)<a class="anchor-link" href="#StackOverflow-:---Applying-Multiple-Decorators-to-a-Function-(This-is-really-fascinating-as-it's-gonna-confuse-you)"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -482,18 +709,18 @@ This includes the following:</p>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">strong</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;strong&gt;&#39;</span> <span class="o">+</span> <span class="n">func</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;&lt;/strong&gt;&#39;</span>
+        <span class="k">return</span> <span class="s1">'&lt;strong&gt;'</span> <span class="o">+</span> <span class="n">func</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'&lt;/strong&gt;'</span>
     <span class="k">return</span> <span class="n">wrapper</span>
 
 <span class="k">def</span> <span class="nf">emphasis</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;em&gt;&#39;</span> <span class="o">+</span> <span class="n">func</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;&lt;/em&gt;&#39;</span>
+        <span class="k">return</span> <span class="s1">'&lt;em&gt;'</span> <span class="o">+</span> <span class="n">func</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'&lt;/em&gt;'</span>
     <span class="k">return</span> <span class="n">wrapper</span>
 
 <span class="nd">@strong</span>
 <span class="nd">@emphasis</span>
 <span class="k">def</span> <span class="nf">greet</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s1">&#39;Hello!&#39;</span>
+    <span class="k">return</span> <span class="s1">'Hello!'</span>
 
 
 <span class="n">greet</span><span class="p">()</span>
@@ -512,7 +739,7 @@ This includes the following:</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;&lt;strong&gt;&lt;em&gt;Hello!&lt;/em&gt;&lt;/strong&gt;&#39;</pre>
+<pre>'&lt;strong&gt;&lt;em&gt;Hello!&lt;/em&gt;&lt;/strong&gt;'</pre>
 </div>
 
 </div>
@@ -531,7 +758,7 @@ This includes the following:</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Disclaimer Execute this at your own risk </span>
-<span class="c1">#Only  80&#39;s kids will remember this</span>
+<span class="c1">#Only  80's kids will remember this</span>
 <span class="kn">import</span> <span class="nn">dis</span>
 <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">greet</span><span class="p">)</span>
 </pre></div>
@@ -543,9 +770,12 @@ This includes the following:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Context-Managers">Context Managers<a class="anchor-link" href="#Context-Managers"> </a></h1>
+<h1 id="Context-Managers">
+<a class="anchor" href="#Context-Managers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Context Managers<a class="anchor-link" href="#Context-Managers"> </a>
+</h1>
 </div>
 </div>
 </div>
@@ -556,10 +786,10 @@ This includes the following:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># let&#39;s open  a file and write some thing into it</span>
-<span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hello.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># let's open  a file and write some thing into it</span>
+<span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'hello.txt'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Some thing&#39;</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'Some thing'</span><span class="p">)</span>
 <span class="k">finally</span><span class="p">:</span>
     <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
@@ -571,9 +801,15 @@ This includes the following:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="You-:--ok-now-that-I-have-wrote-something-into-the-file-I-want-to-read-it,--but-try-and-finally-again,-it-suck's.-There-should-be-some-other-way-around">You :- ok now that I have wrote something into the file I want to read it,  but try and finally again, it suck's. There should be some other way around<a class="anchor-link" href="#You-:--ok-now-that-I-have-wrote-something-into-the-file-I-want-to-read-it,--but-try-and-finally-again,-it-suck's.-There-should-be-some-other-way-around"> </a></h2><h2 id="StackOverflow-:---Context-manger-for-your-Rescue">StackOverflow :-  Context manger for your Rescue<a class="anchor-link" href="#StackOverflow-:---Context-manger-for-your-Rescue"> </a></h2>
+<h3 id="You-:--ok-now-that-I-have-wrote-something-into-the-file-I-want-to-read-it,--but-try-and-finally-again,-it-suck's.-There-should-be-some-other-way-around">
+<a class="anchor" href="#You-:--ok-now-that-I-have-wrote-something-into-the-file-I-want-to-read-it,--but-try-and-finally-again,-it-suck's.-There-should-be-some-other-way-around" aria-hidden="true"><span class="octicon octicon-link"></span></a>You :- ok now that I have wrote something into the file I want to read it,  but try and finally again, it suck's. There should be some other way around<a class="anchor-link" href="#You-:--ok-now-that-I-have-wrote-something-into-the-file-I-want-to-read-it,--but-try-and-finally-again,-it-suck's.-There-should-be-some-other-way-around"> </a>
+</h3>
+<h3 id="StackOverflow-:---Context-manger-for-your-Rescue">
+<a class="anchor" href="#StackOverflow-:---Context-manger-for-your-Rescue" aria-hidden="true"><span class="octicon octicon-link"></span></a>StackOverflow :-  Context manger for your Rescue<a class="anchor-link" href="#StackOverflow-:---Context-manger-for-your-Rescue"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -584,7 +820,7 @@ This includes the following:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;hello.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"hello.txt"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 </pre></div>
 
@@ -609,9 +845,16 @@ This includes the following:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="You-:--That's-pretty-easy-but-what-is-with">You :- That's pretty easy but what is <em><em>with</em></em><a class="anchor-link" href="#You-:--That's-pretty-easy-but-what-is-with"> </a></h2><h2 id="Stackoverflow-:-">Stackoverflow :-<a class="anchor-link" href="#Stackoverflow-:-"> </a></h2><p>It helps python programmers like you to simplify some common resource management patterns by abstracting their functionality
+<h3 id="You-:--That's-pretty-easy-but-what-is-with">
+<a class="anchor" href="#You-:--That's-pretty-easy-but-what-is-with" aria-hidden="true"><span class="octicon octicon-link"></span></a>You :- That's pretty easy but what is <em><em>with</em></em><a class="anchor-link" href="#You-:--That's-pretty-easy-but-what-is-with"> </a>
+</h3>
+<h3 id="Stackoverflow-:-">
+<a class="anchor" href="#Stackoverflow-:-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stackoverflow :-<a class="anchor-link" href="#Stackoverflow-:-"> </a>
+</h3>
+<p>It helps python programmers like you to simplify some common resource management patterns by abstracting their functionality
 and allowing them to be factored out and reused.</p>
 <p>So in this case you don't have to open and close file all done for you automatically.</p>
 
@@ -647,9 +890,15 @@ and allowing them to be factored out and reused.</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="You-:--But-I-want-to-use-with-for-my-own-use-case-how-do-I-do-it?">You :- But I want to use <em><em>with</em></em> for my own use case how do I do it?<a class="anchor-link" href="#You-:--But-I-want-to-use-with-for-my-own-use-case-how-do-I-do-it?"> </a></h2><h2 id="StackOverflow-:--Use-Data-Models-and-relax">StackOverflow :- Use Data Models and relax<a class="anchor-link" href="#StackOverflow-:--Use-Data-Models-and-relax"> </a></h2>
+<h3 id="You-:--But-I-want-to-use-with-for-my-own-use-case-how-do-I-do-it?">
+<a class="anchor" href="#You-:--But-I-want-to-use-with-for-my-own-use-case-how-do-I-do-it?" aria-hidden="true"><span class="octicon octicon-link"></span></a>You :- But I want to use <em><em>with</em></em> for my own use case how do I do it?<a class="anchor-link" href="#You-:--But-I-want-to-use-with-for-my-own-use-case-how-do-I-do-it?"> </a>
+</h3>
+<h3 id="StackOverflow-:--Use-Data-Models-and-relax">
+<a class="anchor" href="#StackOverflow-:--Use-Data-Models-and-relax" aria-hidden="true"><span class="octicon octicon-link"></span></a>StackOverflow :- Use Data Models and relax<a class="anchor-link" href="#StackOverflow-:--Use-Data-Models-and-relax"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -668,14 +917,14 @@ and allowing them to be factored out and reused.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="n">name</span>
 <span class="c1"># with statement automatically calls __enter__ and __exit__ methods        </span>
     <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1">## Acquire the lock do the processing in this method</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="s2">"r"</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span>
     
     <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">exc_type</span><span class="p">,</span><span class="n">exc_val</span><span class="p">,</span><span class="n">exc_tb</span><span class="p">):</span> <span class="c1">## release the lock and free allocated resources in this method</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             
-<span class="k">with</span> <span class="n">MyContextManger</span><span class="p">(</span><span class="s2">&quot;hello.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">MyContextManger</span><span class="p">(</span><span class="s2">"hello.txt"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 </pre></div>
 
@@ -700,9 +949,21 @@ and allowing them to be factored out and reused.</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="You-:--It-works-but-what-are-those-parameters-in-exit-method">You :- It works but what are those parameters in <strong>exit</strong> method<a class="anchor-link" href="#You-:--It-works-but-what-are-those-parameters-in-exit-method"> </a></h2><h2 id="Stackoverflow-:--Google-It-!">Stackoverflow :- Google It !<a class="anchor-link" href="#Stackoverflow-:--Google-It-!"> </a></h2><h2 id="You-:--But-writing-a-class-in-python-is-hectic,-I-want-to-do-functional-Programming">You :- But writing a class in python is hectic, I want to do functional Programming<a class="anchor-link" href="#You-:--But-writing-a-class-in-python-is-hectic,-I-want-to-do-functional-Programming"> </a></h2><h2 id="StackOverflow-:--Use-Decorators">StackOverflow :- Use Decorators<a class="anchor-link" href="#StackOverflow-:--Use-Decorators"> </a></h2>
+<h3 id="You-:--It-works-but-what-are-those-parameters-in-exit-method">
+<a class="anchor" href="#You-:--It-works-but-what-are-those-parameters-in-exit-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>You :- It works but what are those parameters in <strong>exit</strong> method<a class="anchor-link" href="#You-:--It-works-but-what-are-those-parameters-in-exit-method"> </a>
+</h3>
+<h3 id="Stackoverflow-:--Google-It-!">
+<a class="anchor" href="#Stackoverflow-:--Google-It-!" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stackoverflow :- Google It !<a class="anchor-link" href="#Stackoverflow-:--Google-It-!"> </a>
+</h3>
+<h3 id="You-:--But-writing-a-class-in-python-is-hectic,-I-want-to-do-functional-Programming">
+<a class="anchor" href="#You-:--But-writing-a-class-in-python-is-hectic,-I-want-to-do-functional-Programming" aria-hidden="true"><span class="octicon octicon-link"></span></a>You :- But writing a class in python is hectic, I want to do functional Programming<a class="anchor-link" href="#You-:--But-writing-a-class-in-python-is-hectic,-I-want-to-do-functional-Programming"> </a>
+</h3>
+<h3 id="StackOverflow-:--Use-Decorators">
+<a class="anchor" href="#StackOverflow-:--Use-Decorators" aria-hidden="true"><span class="octicon octicon-link"></span></a>StackOverflow :- Use Decorators<a class="anchor-link" href="#StackOverflow-:--Use-Decorators"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -718,12 +979,12 @@ and allowing them to be factored out and reused.</p>
 <span class="nd">@contextmanager</span>
 <span class="k">def</span> <span class="nf">mySimpleContextManager</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">f</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         
-<span class="k">with</span> <span class="n">mySimpleContextManager</span><span class="p">(</span><span class="s2">&quot;hello.txt&quot;</span><span class="p">)</span>  <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">mySimpleContextManager</span><span class="p">(</span><span class="s2">"hello.txt"</span><span class="p">)</span>  <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 </pre></div>
 
@@ -748,15 +1009,25 @@ and allowing them to be factored out and reused.</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="You-:--Ok,-that's-what-I-call-a-pythonic-code-but-what-is-yeild">You :- Ok, that's what I call a pythonic code but what is yeild<a class="anchor-link" href="#You-:--Ok,-that's-what-I-call-a-pythonic-code-but-what-is-yeild"> </a></h2><h2 id="Stackoverflow-:---Hang-On!">Stackoverflow :-  Hang On!<a class="anchor-link" href="#Stackoverflow-:---Hang-On!"> </a></h2>
+<h3 id="You-:--Ok,-that's-what-I-call-a-pythonic-code-but-what-is-yeild">
+<a class="anchor" href="#You-:--Ok,-that's-what-I-call-a-pythonic-code-but-what-is-yeild" aria-hidden="true"><span class="octicon octicon-link"></span></a>You :- Ok, that's what I call a pythonic code but what is yeild<a class="anchor-link" href="#You-:--Ok,-that's-what-I-call-a-pythonic-code-but-what-is-yeild"> </a>
+</h3>
+<h3 id="Stackoverflow-:---Hang-On!">
+<a class="anchor" href="#Stackoverflow-:---Hang-On!" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stackoverflow :-  Hang On!<a class="anchor-link" href="#Stackoverflow-:---Hang-On!"> </a>
+</h3>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Iterators-and-Generators">Iterators and Generators<a class="anchor-link" href="#Iterators-and-Generators"> </a></h1><p>An iterator is an object representing a stream of data; this object returns the data one element at a time. A Python iterator must support a method called <strong>next</strong>() that takes no arguments and always returns the next element of the stream. If there are no more elements in the stream, <strong>next</strong>() must raise the StopIteration exception. Iterators don’t have to be finite, though; it’s perfectly reasonable to write an iterator that produces an infinite stream of data.</p>
+<h1 id="Iterators-and-Generators">
+<a class="anchor" href="#Iterators-and-Generators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Iterators and Generators<a class="anchor-link" href="#Iterators-and-Generators"> </a>
+</h1>
+<p>An iterator is an object representing a stream of data; this object returns the data one element at a time. A Python iterator must support a method called <strong>next</strong>() that takes no arguments and always returns the next element of the stream. If there are no more elements in the stream, <strong>next</strong>() must raise the StopIteration exception. Iterators don’t have to be finite, though; it’s perfectly reasonable to write an iterator that produces an infinite stream of data.</p>
 <p>The built-in iter() function takes an arbitrary object and tries to return an iterator that will return the object’s contents or elements, raising TypeError if the object doesn’t support iteration. Several of Python’s built-in data types support iteration, the most common being lists and dictionaries. An object is called iterable if you can get an iterator for it.</p>
 
 </div>
@@ -859,9 +1130,16 @@ and allowing them to be factored out and reused.</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="You-:--Again-a-class">You :- Again a class<a class="anchor-link" href="#You-:--Again-a-class"> </a></h2><h2 id="StackOverflow-:--OK-here's-a-easy-way-Use-Generators">StackOverflow :- OK here's a easy way Use Generators<a class="anchor-link" href="#StackOverflow-:--OK-here's-a-easy-way-Use-Generators"> </a></h2><p>They Simplify writing Iterators, kind of iterable you can only iterate over once. Generators do not store the values in memory, they generate the values on the fly so no storage is required.
+<h3 id="You-:--Again-a-class">
+<a class="anchor" href="#You-:--Again-a-class" aria-hidden="true"><span class="octicon octicon-link"></span></a>You :- Again a class<a class="anchor-link" href="#You-:--Again-a-class"> </a>
+</h3>
+<h3 id="StackOverflow-:--OK-here's-a-easy-way-Use-Generators">
+<a class="anchor" href="#StackOverflow-:--OK-here's-a-easy-way-Use-Generators" aria-hidden="true"><span class="octicon octicon-link"></span></a>StackOverflow :- OK here's a easy way Use Generators<a class="anchor-link" href="#StackOverflow-:--OK-here's-a-easy-way-Use-Generators"> </a>
+</h3>
+<p>They Simplify writing Iterators, kind of iterable you can only iterate over once. Generators do not store the values in memory, they generate the values on the fly so no storage is required.
 So you ask one value it will generate and spit it out</p>
 
 </div>
@@ -913,7 +1191,8 @@ So you ask one value it will generate and spit it out</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You’re doubtless familiar with how regular function calls work in Python or C. When you call a function, it gets a private namespace where its local variables are created. When the function reaches a return statement, the local variables are destroyed and the value is returned to the caller. A later call to the same function creates a new private namespace and a fresh set of local variables. But, what if the local variables weren’t thrown away on exiting a function? What if you could later resume the function where it left off? This is what generators provide; they can be thought of as resumable functions.</p>
 <p>Any function containing a yield keyword is a generator function; this is detected by Python’s bytecode compiler which compiles the function specially as a result.</p>
@@ -990,7 +1269,8 @@ So you ask one value it will generate and spit it out</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let’s look in more detail at built-in functions often used with iterators.</p>
 <p>Two of Python’s built-in functions, map() and filter() duplicate the features of generator expressions:</p>
@@ -1072,9 +1352,12 @@ returns an iterator over all the sequence elements that meet a certain condition
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="zip(iterA,-iterB,-...)-takes-one-element-from-each-iterable-and-returns-them-in-a-tuple:">zip(iterA, iterB, ...) takes one element from each iterable and returns them in a tuple:<a class="anchor-link" href="#zip(iterA,-iterB,-...)-takes-one-element-from-each-iterable-and-returns-them-in-a-tuple:"> </a></h3>
+<h3 id="zip(iterA,-iterB,-...)-takes-one-element-from-each-iterable-and-returns-them-in-a-tuple:">
+<a class="anchor" href="#zip(iterA,-iterB,-...)-takes-one-element-from-each-iterable-and-returns-them-in-a-tuple:" aria-hidden="true"><span class="octicon octicon-link"></span></a>zip(iterA, iterB, ...) takes one element from each iterable and returns them in a tuple:<a class="anchor-link" href="#zip(iterA,-iterB,-...)-takes-one-element-from-each-iterable-and-returns-them-in-a-tuple:"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -1085,7 +1368,7 @@ returns an iterator over all the sequence elements that meet a certain condition
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">([</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">z</span><span class="p">:</span>
     <span class="nb">print</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
@@ -1113,13 +1396,17 @@ c 3
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Functools-and-Itertools-(This-is-going-to-blow-your-mind)">Functools and Itertools (This is going to blow your mind)<a class="anchor-link" href="#Functools-and-Itertools-(This-is-going-to-blow-your-mind)"> </a></h1>
+<h1 id="Functools-and-Itertools-(This-is-going-to-blow-your-mind)">
+<a class="anchor" href="#Functools-and-Itertools-(This-is-going-to-blow-your-mind)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functools and Itertools (This is going to blow your mind)<a class="anchor-link" href="#Functools-and-Itertools-(This-is-going-to-blow-your-mind)"> </a>
+</h1>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>These two python modules are super helpful in writing Efficient Functional Code</p>
 
@@ -1162,7 +1449,8 @@ c 3
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For programs written in a functional style, you’ll sometimes want to construct variants of existing functions that have some of the parameters filled in. Consider a Python function f(a, b, c); you may wish to create a new function g(b, c) that’s equivalent to f(1, b, c); you’re filling in a value for one of f()’s parameters. This is called “partial function application”.</p>
 <p>The constructor for partial() takes the arguments (function, arg1, arg2, ..., kwarg1=value1, kwarg2=value2). The resulting object is callable, so you can just call it to invoke function with the filled-in arguments.</p>
@@ -1180,12 +1468,12 @@ c 3
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
 <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">subsystem</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Write the contents of &#39;message&#39; to the specified subsystem.&quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subsystem</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+    <span class="sd">"""Write the contents of 'message' to the specified subsystem."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">subsystem</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
     <span class="o">...</span>
 
-<span class="n">server_log</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">subsystem</span><span class="o">=</span><span class="s1">&#39;server&#39;</span><span class="p">)</span>
-<span class="n">server_log</span><span class="p">(</span><span class="s1">&#39;Unable to open socket&#39;</span><span class="p">)</span>
+<span class="n">server_log</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">subsystem</span><span class="o">=</span><span class="s1">'server'</span><span class="p">)</span>
+<span class="n">server_log</span><span class="p">(</span><span class="s1">'Unable to open socket'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1364,15 +1652,21 @@ c 3
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="To-read-more-about-itertools-https://docs.python.org/3.6/howto/functional.html#creating-new-iterators">To read more about itertools <a href="https://docs.python.org/3.6/howto/functional.html#creating-new-iterators">https://docs.python.org/3.6/howto/functional.html#creating-new-iterators</a><a class="anchor-link" href="#To-read-more-about-itertools-https://docs.python.org/3.6/howto/functional.html#creating-new-iterators"> </a></h3>
+<h3 id="To-read-more-about-itertools-https://docs.python.org/3.6/howto/functional.html#creating-new-iterators">
+<a class="anchor" href="#To-read-more-about-itertools-https://docs.python.org/3.6/howto/functional.html#creating-new-iterators" aria-hidden="true"><span class="octicon octicon-link"></span></a>To read more about itertools <a href="https://docs.python.org/3.6/howto/functional.html#creating-new-iterators">https://docs.python.org/3.6/howto/functional.html#creating-new-iterators</a><a class="anchor-link" href="#To-read-more-about-itertools-https://docs.python.org/3.6/howto/functional.html#creating-new-iterators"> </a>
+</h3>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Some-Python-Tricks">Some Python Tricks<a class="anchor-link" href="#Some-Python-Tricks"> </a></h1>
+<h1 id="Some-Python-Tricks">
+<a class="anchor" href="#Some-Python-Tricks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some Python Tricks<a class="anchor-link" href="#Some-Python-Tricks"> </a>
+</h1>
 </div>
 </div>
 </div>
@@ -1385,17 +1679,17 @@ c 3
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#normal calculator prorgramm</span>
 <span class="k">def</span> <span class="nf">calculator</span><span class="p">(</span><span class="n">operator</span> <span class="p">,</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">operator</span><span class="o">==</span><span class="s2">&quot;add&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">operator</span><span class="o">==</span><span class="s2">"add"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
-    <span class="k">elif</span> <span class="n">operator</span><span class="o">==</span><span class="s2">&quot;sub&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">operator</span><span class="o">==</span><span class="s2">"sub"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">-</span><span class="n">y</span>
-    <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;div&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">"div"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">/</span><span class="n">y</span>
-    <span class="k">elif</span> <span class="n">operator</span><span class="o">==</span><span class="s2">&quot;mul&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">operator</span><span class="o">==</span><span class="s2">"mul"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
     <span class="k">else</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;unknow&quot;</span>
-<span class="n">calculator</span><span class="p">(</span><span class="s2">&quot;add&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"unknow"</span>
+<span class="n">calculator</span><span class="p">(</span><span class="s2">"add"</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1430,12 +1724,12 @@ c 3
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Pythonic way </span>
 <span class="n">calculatorDict</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;add&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span>
-    <span class="s2">&quot;sub&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">,</span>
-    <span class="s2">&quot;mul&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span>
-    <span class="s2">&quot;div&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">/</span><span class="n">y</span>
+    <span class="s2">"add"</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span>
+    <span class="s2">"sub"</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">,</span>
+    <span class="s2">"mul"</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span>
+    <span class="s2">"div"</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">/</span><span class="n">y</span>
 <span class="p">}</span>
-<span class="n">calculatorDict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;add&quot;</span><span class="p">,</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="kc">None</span><span class="p">)(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">calculatorDict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"add"</span><span class="p">,</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="kc">None</span><span class="p">)(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1471,13 +1765,13 @@ c 3
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># because we are repeating x,y in all lambda so better approach</span>
 <span class="k">def</span> <span class="nf">calculatorCorrected</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span>
-    <span class="s2">&quot;add&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span>
-    <span class="s2">&quot;sub&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="p">:</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">,</span>
-    <span class="s2">&quot;mul&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="p">:</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span>
-    <span class="s2">&quot;div&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="p">:</span><span class="n">x</span><span class="o">/</span><span class="n">y</span>
-<span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">operator</span> <span class="p">,</span> <span class="k">lambda</span> <span class="p">:</span><span class="s2">&quot;None&quot;</span><span class="p">)()</span>
+    <span class="s2">"add"</span><span class="p">:</span><span class="k">lambda</span> <span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span>
+    <span class="s2">"sub"</span><span class="p">:</span><span class="k">lambda</span> <span class="p">:</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">,</span>
+    <span class="s2">"mul"</span><span class="p">:</span><span class="k">lambda</span> <span class="p">:</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span>
+    <span class="s2">"div"</span><span class="p">:</span><span class="k">lambda</span> <span class="p">:</span><span class="n">x</span><span class="o">/</span><span class="n">y</span>
+<span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">operator</span> <span class="p">,</span> <span class="k">lambda</span> <span class="p">:</span><span class="s2">"None"</span><span class="p">)()</span>
 
-<span class="n">calculatorCorrected</span><span class="p">(</span><span class="s2">&quot;add&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">calculatorCorrected</span><span class="p">(</span><span class="s2">"add"</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1585,7 +1879,7 @@ c 3
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Named tuple</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">getsizeof</span>
-<span class="n">vector</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Vector&quot;</span> <span class="p">,</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">,</span><span class="s2">&quot;z&quot;</span><span class="p">,</span><span class="s2">&quot;k&quot;</span><span class="p">])(</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">212</span><span class="p">,</span><span class="mi">343</span><span class="p">)</span>
+<span class="n">vector</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">"Vector"</span> <span class="p">,</span> <span class="p">[</span><span class="s2">"x"</span><span class="p">,</span><span class="s2">"y"</span><span class="p">,</span><span class="s2">"z"</span><span class="p">,</span><span class="s2">"k"</span><span class="p">])(</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">212</span><span class="p">,</span><span class="mi">343</span><span class="p">)</span>
 <span class="n">vector</span><span class="p">,</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vector</span><span class="o">.</span><span class="n">y</span> <span class="c1"># can be accessed lke list and dic</span>
 </pre></div>
 
@@ -1622,10 +1916,10 @@ c 3
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># how to manage a dictionary with count</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 <span class="n">pubg_level3_bag</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-<span class="n">kill</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kar98&quot;</span><span class="p">:</span><span class="mi">1</span> <span class="p">,</span> <span class="s2">&quot;7.76mm&quot;</span><span class="p">:</span><span class="mi">60</span><span class="p">}</span>
+<span class="n">kill</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"kar98"</span><span class="p">:</span><span class="mi">1</span> <span class="p">,</span> <span class="s2">"7.76mm"</span><span class="p">:</span><span class="mi">60</span><span class="p">}</span>
 <span class="n">pubg_level3_bag</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kill</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pubg_level3_bag</span><span class="p">)</span>
-<span class="n">more_kill</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;7.76mm&quot;</span><span class="p">:</span><span class="mi">30</span> <span class="p">,</span> <span class="s2">&quot;scarl&quot;</span><span class="p">:</span><span class="mi">1</span> <span class="p">,</span> <span class="s2">&quot;5.56mm&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">}</span>
+<span class="n">more_kill</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"7.76mm"</span><span class="p">:</span><span class="mi">30</span> <span class="p">,</span> <span class="s2">"scarl"</span><span class="p">:</span><span class="mi">1</span> <span class="p">,</span> <span class="s2">"5.56mm"</span><span class="p">:</span><span class="mi">30</span><span class="p">}</span>
 <span class="n">pubg_level3_bag</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">more_kill</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pubg_level3_bag</span><span class="p">)</span>
 </pre></div>
@@ -1640,8 +1934,8 @@ c 3
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Counter({&#39;7.76mm&#39;: 60, &#39;kar98&#39;: 1})
-Counter({&#39;7.76mm&#39;: 90, &#39;5.56mm&#39;: 30, &#39;kar98&#39;: 1, &#39;scarl&#39;: 1})
+<pre>Counter({'7.76mm': 60, 'kar98': 1})
+Counter({'7.76mm': 90, '5.56mm': 30, 'kar98': 1, 'scarl': 1})
 </pre>
 </div>
 </div>
@@ -1659,7 +1953,7 @@ Counter({&#39;7.76mm&#39;: 90, &#39;5.56mm&#39;: 30, &#39;kar98&#39;: 1, &#39;sc
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># don&#39;t remove element from the front of a list in python use instead deque</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># don't remove element from the front of a list in python use instead deque</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 </pre></div>
 
@@ -1722,21 +2016,36 @@ Counter({&#39;7.76mm&#39;: 90, &#39;5.56mm&#39;: 30, &#39;kar98&#39;: 1, &#39;sc
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Refer-these-To-be-GREAT-IN-PYTHON">Refer these To be <em>GREAT IN PYTHON</em><a class="anchor-link" href="#Refer-these-To-be-GREAT-IN-PYTHON"> </a></h1>
+<h1 id="Refer-these-To-be-GREAT-IN-PYTHON">
+<a class="anchor" href="#Refer-these-To-be-GREAT-IN-PYTHON" aria-hidden="true"><span class="octicon octicon-link"></span></a>Refer these To be <em>GREAT IN PYTHON</em><a class="anchor-link" href="#Refer-these-To-be-GREAT-IN-PYTHON"> </a>
+</h1>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Python-Doc"><a href="https://docs.python.org/3/">Python Doc</a><a class="anchor-link" href="#Python-Doc"> </a></h3><h3 id="Real-Python"><a href="https://realpython.com/">Real Python</a><a class="anchor-link" href="#Real-Python"> </a></h3><h3 id="Youtube-PyData"><a href="https://www.youtube.com/user/PyDataTV">Youtube PyData</a><a class="anchor-link" href="#Youtube-PyData"> </a></h3>
+<h3 id="Python-Doc">
+<a class="anchor" href="#Python-Doc" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://docs.python.org/3/">Python Doc</a><a class="anchor-link" href="#Python-Doc"> </a>
+</h3>
+<h3 id="Real-Python">
+<a class="anchor" href="#Real-Python" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://realpython.com/">Real Python</a><a class="anchor-link" href="#Real-Python"> </a>
+</h3>
+<h3 id="Youtube-PyData">
+<a class="anchor" href="#Youtube-PyData" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://www.youtube.com/user/PyDataTV">Youtube PyData</a><a class="anchor-link" href="#Youtube-PyData"> </a>
+</h3>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="THE-END">THE END<a class="anchor-link" href="#THE-END"> </a></h1>
+<h1 id="THE-END">
+<a class="anchor" href="#THE-END" aria-hidden="true"><span class="octicon octicon-link"></span></a>THE END<a class="anchor-link" href="#THE-END"> </a>
+</h1>
 </div>
 </div>
 </div>
@@ -1759,3 +2068,45 @@ Counter({&#39;7.76mm&#39;: 90, &#39;5.56mm&#39;: 30, &#39;kar98&#39;: 1, &#39;sc
 
 </div>
 
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="entiretydotai/blogs"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blogs/python/advance-python/decorator/context-manager/generator/2020/11/04/Advance-python.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blogs/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blogs/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blogs/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>ML/DL Meetup Community.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/entiretydotai" title="entiretydotai"><svg class="svg-icon grey"><use xlink:href="/blogs/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/entiretydotai" title="entiretydotai"><svg class="svg-icon grey"><use xlink:href="/blogs/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
